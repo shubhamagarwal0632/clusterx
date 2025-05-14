@@ -1,0 +1,30 @@
+.ai-section {
+  padding: 3rem 0 2rem 0;
+  background: #fff;
+  text-align: center;
+}
+.ai-section h2 {
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 2rem;
+}
+.ai-box {
+  background: #ffebdd;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(255, 106, 47, 0.07);
+  padding: 2rem 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  color: #444;
+  animation: fadeIn 1.2s ease-in;
+}
+
+@media (max-width: 700px) {
+  .ai-box {
+    padding: 1rem 0.5rem;
+    font-size: 1rem;
+    width: 90vw;
+    min-width: 0;
+  }
+}
