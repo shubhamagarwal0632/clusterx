@@ -35,7 +35,7 @@ const FAQSection = () => {
         transition={{ duration: 0.7, ease: "easeOut" }}
         viewport={{ once: true }}
       >
-        Don't let systems slow you down
+        Frequently Asked Questions
       </motion.h2>
       <div className="faq-list">
         {faqs.map((faq, i) => (

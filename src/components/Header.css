@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
+  padding: 1rem 2rem;
   background: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.03);
   animation: fadeIn 1.2s ease-in;
@@ -85,13 +85,113 @@
   background: #ff6a2f;
   color: #fff;
   border: none;
-  padding: 0.7rem 1.4rem;
+  padding: 0.7rem 1.3rem;
   border-radius: 24px;
   font-weight: bold;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.2s;
+  font-size: 1.08rem;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .header-cta:hover {
   background: #e0551c;
+}
+
+/* Force mobile header on small physical screens, even in desktop mode */
+.force-mobile .header {
+  flex-direction: row !important;
+  align-items: center !important;
+  padding: 1rem 0.7rem !important;
+}
+.force-mobile .header-nav {
+  position: absolute !important;
+  top: 64px !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: #fff !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  padding: 1rem 2rem !important;
+  gap: 1rem !important;
+  margin: 0 !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07) !important;
+  transform: translateY(-120%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: all 0.3s !important;
+  z-index: 1000 !important;
+  display: flex !important;
+}
+.force-mobile .header-nav.open {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+.force-mobile .header-cta-desktop {
+  display: none !important;
+}
+.force-mobile .header-cta-mobile {
+  display: block !important;
+  width: 100% !important;
+  margin-top: 0.7rem !important;
+  text-align: left !important;
+}
+.force-mobile .header-cta {
+  width: 100% !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  font-size: 1.08rem !important;
+  padding: 0.7rem 1.2rem !important;
+}
+.force-mobile .hamburger {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  padding: 0 !important;
+  margin-left: 1rem !important;
+  display: block !important;
+}
+
+
+.header-cta-desktop {
+  display: inline-block;
+}
+.header-cta-mobile {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .header-cta-desktop {
+    display: none;
+  }
+  .header-cta-mobile {
+    display: block;
+    width: 100%;
+    margin-top: 0.7rem;
+    text-align: left;
+  }
+  .header-cta {
+    width: 100%;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 1.08rem;
+    padding: 0.7rem 1.2rem;
+  }
+  .hamburger {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    margin-left: 1rem;
+    display: block;
+  }
+  .header-nav {
+    padding-top: 1.3rem;
+    padding-bottom: 1.3rem;
+  }
 }

@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import "./HowItWorksSection.css";
+import AiPartnerSection from "./AiPartnerSection";
 
 import connectIcon from '../assets/howitworks-connect.svg';
 import automateIcon from '../assets/howitworks-automate.svg';
@@ -80,18 +81,18 @@ const HowItWorksStep = ({ step, index }) => {
   );
 };
 
-const HowItWorksSection = () => {
-  console.log("HowItWorksSection rendered");
-  return (
-    <section className="howitworks-section" id="how-it-works">
-      <h2>How It Works</h2>
-      <div className="howitworks-list">
-        {steps.map((step, i) => (
-          <HowItWorksStep step={step} index={i} key={i} />
+const HowItWorksSection = () => (
+  <>
+    <AiPartnerSection />
+    <section className="howitworks-main-section">
+      <h2 className="howitworks-main-title">How it works</h2>
+      <div className="howitworks-steps">
+        {steps.map((step, idx) => (
+          <HowItWorksStep step={step} index={idx} key={idx} />
         ))}
       </div>
     </section>
-  );
-};
+  </>
+);
 
 export default HowItWorksSection;

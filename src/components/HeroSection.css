@@ -1,22 +1,189 @@
 .hero-section {
-  background: linear-gradient(135deg, #fff 0%, #ffe3d1 100%);
-  min-height: 60vh;
-  padding: 4rem 0 2.5rem 0;
+  background: linear-gradient(120deg, #fff6e9 0%, #ffe3d1 50%, #ffd6b3 100%);
+  position: relative;
+  min-height: 70vh;
+  padding: 5rem 0 3rem 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  overflow: hidden;
+}
+
+.hero-row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1300px;
+  min-height: 450px;
+  gap: 40px;
+  align-items: stretch;
+}
+
+.hero-left {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.hero-right {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  padding: 15px;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-video iframe {
+  width: 100%;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(255, 106, 47, 0.12);
+  border: none;
+}
+
+
+.marquee-container {
+  width: 100vw;
+  overflow: hidden;
+  margin: 2rem auto 0 auto;
+  height: 80px;
+  position: relative;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 10s linear infinite;
+}
+.hero-bottom-image {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+
+
+@keyframes move-horizontal {
+}
+
+.trusted-by-text {
+  display: block;
+  width: fit-content;
+  margin: 1.5rem auto 0 auto;
+  font-size: 1.1rem;
+  color: #ff7a1a;
+  font-weight: 600;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+@keyframes move-horizontal-text {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: 50px;
+  }
+}
+
+@keyframes move-horizontal {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: 60px; /* Adjust how far you want the image to move */
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-row {
+    flex-direction: column;
+    gap: 28px;
+    min-height: unset;
+  }
+  .hero-video {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+  }
+  .hero-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100vw;
+    border-radius: 12px;
+    background: #000;
+  }
+}
+
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  left: -120px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #ff9a4b44 0%, transparent 80%);
+  z-index: 0;
+}
+
+.hero-section::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  right: -80px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, #ff6a2f33 0%, transparent 80%);
+  z-index: 0;
+}
+
+@media (max-width: 900px) {
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+  .hero-content p {
+    font-size: 1.1rem;
+  }
 }
 
 @media (max-width: 600px) {
   .hero-section {
-    padding: 2rem 0 1rem 0;
+    padding: 2.2rem 0 1.1rem 0;
   }
   .hero-content h1 {
     font-size: 1.4rem;
     line-height: 1.2;
   }
   .hero-content p {
+    font-size: 1rem;
+  }
+  .hero-cta {
+    padding: 0.8rem 1.5rem;
     font-size: 1rem;
   }
   .hero-video iframe {
@@ -26,42 +193,99 @@
     max-width: 100vw;
   }
 }
+
 .hero-content {
   text-align: center;
-  max-width: 700px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 0 1.2rem;
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 1.2s cubic-bezier(.23,1.01,.32,1) 0.1s both;
 }
+.hero-video iframe {
+  background-position:center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Force mobile video aspect ratio on small physical screens, even in desktop mode */
+.force-mobile .hero-video {
+  position: relative !important;
+  width: 100% !important;
+  padding-bottom: 56.25% !important; /* 16:9 aspect ratio */
+  height: 0 !important;
+  overflow: hidden !important;
+  display: block !important;
+}
+.force-mobile .hero-video iframe {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100vw !important;
+  border-radius: 12px !important;
+  background: #000 !important;
+  min-height: 0 !important;
+}
+
 .hero-content h1 {
-  font-size: 2.8rem;
-  color: #222;
+  font-size: 3.5rem;
+  color: #191919;
   margin-bottom: 1.1rem;
-  font-weight: 700;
-  letter-spacing: -1px;
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.08;
+  background: linear-gradient(90deg, #ff6a2f 30%, #ff9a4b 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
+
 .hero-content p {
-  font-size: 1.25rem;
-  color: #444;
+  font-size: 1.35rem;
+  color: #4a3c2a;
   margin-bottom: 2.2rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.1px;
 }
+
 .hero-cta {
   background: linear-gradient(90deg, #ff6a2f 60%, #ff9a4b 100%);
   color: #fff;
   border: none;
-  padding: 1rem 2.1rem;
-  border-radius: 28px;
-  font-weight: bold;
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 0.95rem 2.7rem;
+  border-radius: 2.2rem;
+  box-shadow: 0 6px 24px 0 #ff6a2f22;
   cursor: pointer;
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 2px 12px rgba(255, 106, 47, 0.12);
-  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+  margin-bottom: 2.2rem;
+  transition: background 0.2s, transform 0.17s, box-shadow 0.18s;
+  position: relative;
+  z-index: 1;
 }
-.hero-cta:hover {
-  background: linear-gradient(90deg, #e0551c 60%, #ff9a4b 100%);
-  box-shadow: 0 8px 32px rgba(255, 106, 47, 0.18);
-  transform: translateY(-2px) scale(1.04);
+
+.hero-cta:hover, .hero-cta:focus {
+  background: linear-gradient(90deg, #ff9a4b 60%, #ff6a2f 100%);
+  transform: translateY(-3px) scale(1.045);
+  box-shadow: 0 10px 32px 0 #ff9a4b33;
 }
+
 .hero-video {
   display: flex;
   justify-content: center;
