@@ -125,7 +125,7 @@ return (
                 transform: 'translate(-50%, -50%)',
                 position: 'absolute'
               }}
-              // variants={childVariants}
+              variants={childVariants}
             >
               {icon}
             </div>

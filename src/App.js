@@ -11,6 +11,8 @@ import IntegrateSection from './components/IntegrateSection';
 import AISection from './components/AISection';
 import TestimonialsSection from './components/TestimonialsSection';
 import FAQSection from './components/FAQSection';
+import BlogSection from './components/BlogSection';
+// import AIServicesSection from './components/AIServicesSection';
 import Footer from './components/Footer';
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -55,6 +57,8 @@ function App() {
           <IntegrateSection />
           {/* <IntegrationsSection /> */}
           <AISection />
+          {/* <AIServicesSection /> */}
+          <BlogSection />
           <TestimonialsSection />
           <FAQSection />
           <Footer />

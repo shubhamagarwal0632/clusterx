@@ -1,6 +1,6 @@
 /* Base styles */
 .footer {
-  background: #2c1a12;
+  background: rgba(27, 20, 15, 1);
   color: #fff;
   padding: 2.5rem 0 0;
   font-family: 'Inter', Arial, sans-serif;
@@ -26,13 +26,14 @@
 
 .footer-ai-banner {
   background:
-    radial-gradient(circle at 55% 50%, #ff6a2f44 0%, #181210 60%, #181210 100%),
+    radial-gradient(circle at 55% 50%, #02010144 0%, #181210 60%, #181210 100%),
     url('../assets/footer-banner-bg.png') center center/cover no-repeat;
   background-blend-mode: lighten;
   border-radius: 22px;
   margin: 0 auto 3rem;
   max-width: 1300px;
-  width: 98%;
+  border: 0.5px solid gray;
+  width: 100%;
   min-height: 200px;
   display: flex;
   align-items: center;
@@ -40,13 +41,13 @@
   position: relative;
   overflow: hidden;
   box-shadow: 0 6px 40px 0 rgba(0,0,0,0.22);
-  font-size: 3.2rem;
-  font-weight: 800;
+  font-size: 5.2rem;
+  /* font-weight: 800; */
   letter-spacing: 0.01em;
   text-align: center;
   line-height: 1.1;
   text-shadow: 0 4px 32px #ff6a2f33, 0 1px 0 #fff4, 0 0 2px #000a, 0 0 12px #fff2;
-  padding: 3.5rem 3rem;
+  padding: 3.5rem 0rem;
   transition: all 0.2s;
 }
 
@@ -102,6 +103,7 @@
     width: 100%;
     max-width: 100%;
     border-radius: 12px;
+    background-color: black;
   }
 
   .footer-col {
@@ -205,8 +207,8 @@
 
   .footer-ai-banner {
     min-height: 200px;
-    font-size: 3rem;
-    padding: 3rem 2rem;
+    /* font-size: 3rem; */
+    /* padding: 3rem 2rem; */
     margin-bottom: 3rem;
   }
 

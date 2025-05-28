@@ -31,14 +31,9 @@ const features = [
     desc: "Critical info lives in silos — decisions slow down."
   },
   {
-    icon: featureAi,
+    icon: featureLightning,
     title: "AI moves fast",
     desc: "New tools launch weekly. Your systems fall behind just as fast."
-  },
-  {
-    icon: featureLightning,
-    title: "No real-time visibility",
-    desc: "Work stalls, deadlines slip, and you're flying blind."
   }
 ];
 
@@ -107,6 +102,7 @@ const FeaturesSection = () => {
 
   return (
     <section className="features-section" id="industry" ref={ref}>
+      <div className="integrate-header-centered">
       <motion.div 
         className="feature-tag"
         initial={{ opacity: 0, y: 10 }}
@@ -135,6 +131,7 @@ const FeaturesSection = () => {
         /> 
         FEATURE
       </motion.div>
+      </div>
       
       <motion.h2 
         className="features-heading"

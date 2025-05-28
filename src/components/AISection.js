@@ -26,9 +26,15 @@ const AISection = () => {
   const float6 = useTransform(scrollY, [0, 600], [0, -40]);
   const float7 = useTransform(scrollY, [0, 600], [0, 90]);
 
+  
   return (
     <section className="ai-section" id="resources">
-      <div className="ai-offers-badge">OFFERS</div>
+      <div className="integrate-header-centered" >
+      <div className="integrate-badge">
+          <span className="integrate-dot" />
+          <span className="integrate-text">OFFERS</span>
+      </div>
+      </div>
       <h2 className="ai-heading">Ai partner, Not a builder</h2>
       <div className="ai-subtitle">
         AI is not static. With us, you get more than implementation<br />

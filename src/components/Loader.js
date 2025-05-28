@@ -1,91 +1,82 @@
 import React, { useEffect, useState, useRef } from 'react';
-import './Loading.css';
+import './Loader.css';
+import logo from '../assets/logo-clusterx.svg'; // Make sure you have this logo in your assets
 
-const Loader = () => {
-  const [typedText, setTypedText] = useState('');
-  const [isComplete, setIsComplete] = useState(false);
-  const [cursorVisible, setCursorVisible] = useState(true);
-  const animationFrame = useRef(null);
-  const startTime = useRef(null);
-  const fullText = 'Cluster';
-  const typingSpeed = 100; // Base speed in ms
-  
-  // Smooth cursor blink effect
+const Loader = ({ onAnimationComplete }) => {
+  const [animationPhase, setAnimationPhase] = useState('expanding');
+  const [position, setPosition] = useState({ 
+    top: '50%', 
+    left: '50%', 
+    transform: 'translate(-50%, -50%) scale(1)',
+    width: '200px',
+    height: '200px'
+  });
+  const loaderRef = useRef(null);
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCursorVisible(prev => !prev);
-    }, 600);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Typing animation with requestAnimationFrame for smoother updates
-  useEffect(() => {
-    if (typedText.length >= fullText.length) {
-      const timer = setTimeout(() => {
-        setIsComplete(true);
-      }, 800); // Slightly longer pause to appreciate the animation
-      return () => clearTimeout(timer);
-    }
-
-    
-    const startTyping = (timestamp) => {
-      if (!startTime.current) startTime.current = timestamp;
-      const elapsed = timestamp - startTime.current;
+    // Initial animation - expand the logo
+    const expandTimer = setTimeout(() => {
+      setAnimationPhase('moving');
       
-      // Calculate which character should be shown based on time
-      const charsToShow = Math.min(
-        Math.floor(elapsed / typingSpeed) + 1,
-        fullText.length
-      );
-      
-      setTypedText(fullText.substring(0, charsToShow));
-      
-      if (charsToShow < fullText.length) {
-        animationFrame.current = requestAnimationFrame(startTyping);
-      } else {
-        startTime.current = null;
+      // Get header logo position
+      const headerLogo = document.querySelector('.header-logo');
+      if (headerLogo && loaderRef.current) {
+        const headerRect = headerLogo.getBoundingClientRect();
+        const loaderRect = loaderRef.current.getBoundingClientRect();
+        
+        // Calculate final position
+        const finalPosition = {
+          top: `${headerRect.top + window.scrollY}px`,
+          left: `${headerRect.left + window.scrollX}px`,
+          width: `${headerRect.width}px`,
+          height: `${headerRect.height}px`,
+          transform: 'scale(1)'
+        };
+        
+        setPosition(finalPosition);
       }
-    };
-    
-    // Start the animation
-    animationFrame.current = requestAnimationFrame(startTyping);
-    
-    // Cleanup
+    }, 1000); // Time for initial expansion (reduced from 1500ms)
+
+
+    // Complete the animation and notify parent
+    const completeTimer = setTimeout(() => {
+      setAnimationPhase('complete');
+      // Add a small delay before notifying completion
+      const notifyTimer = setTimeout(() => {
+        if (onAnimationComplete) {
+          onAnimationComplete();
+        }
+      }, 300);
+      
+      return () => clearTimeout(notifyTimer);
+    }, 1800); // Total animation time (reduced from 2500ms)
+
+
     return () => {
-      if (animationFrame.current) {
-        cancelAnimationFrame(animationFrame.current);
-      }
+      clearTimeout(expandTimer);
+      clearTimeout(completeTimer);
     };
-  }, [fullText]);
+  }, [onAnimationComplete]);
 
-  // If loading is complete, don't render anything
-  if (isComplete) return null;
+  if (animationPhase === 'complete') return null;
 
   return (
-    <div className={`loading-overlay ${isComplete ? 'fade-out' : ''}`}>
-      <div className="loading-container">
-        <div className="typing-container">
-          <h1 className="typing-text">
-            {typedText.split('').map((char, index) => (
-              <span 
-                key={index} 
-                className="char"
-                style={{
-                  '--delay': `${index * 0.05}s`,
-                  '--char-index': index
-                }}
-              >
-                {char}
-              </span>
-            ))}
-            <span 
-              className={`cursor ${cursorVisible ? 'visible' : ''}`}
-              style={{
-                '--cursor-delay': `${typedText.length * 0.05}s`
-              }}
-            ></span>
-          </h1>
-        </div>
+    <div className={`loader-overlay ${animationPhase}`}>
+      <div 
+        ref={loaderRef}
+        className="loader-logo-container"
+        style={position}
+      >
+        <img 
+          src={logo} 
+          alt="ClusterX Logo" 
+          className="loader-logo"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain'
+          }}
+        />
       </div>
     </div>
   );

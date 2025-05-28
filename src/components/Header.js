@@ -1,15 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Header.css";
 import Logo from "./Logo";
 
-
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef(null);
+  const logoRef = useRef(null);
+
+  useEffect(() => {
+    // Add animation class to header when component mounts
+    if (headerRef.current) {
+      headerRef.current.classList.add('animate-in');
+    }
+    
+    // Add a small delay to ensure the DOM is ready
+    const timer = setTimeout(() => {
+      if (logoRef.current) {
+        logoRef.current.style.opacity = '1';
+      }
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      if (headerRef.current) {
+        headerRef.current.classList.remove('animate-in');
+      }
+    };
+  }, []);
 
   return (
-    <header className="header animate-fadein">
+    <header className="header animate-fadein" ref={headerRef}>
       <div style={{ display: "flex", gap: 25, alignItems: "center" }}>
-      <div className="header-logo"><Logo style={{ height: 24 }} /></div>
+        <div className="header-logo" ref={logoRef} style={{ opacity: 0, transition: 'opacity 0.5s ease-in-out' }}>
+          <Logo style={{ height: 24 }} />
+        </div>
       <nav className={`header-nav${menuOpen ? " open" : ""}`}>
         <a href="#industry" onClick={() => setMenuOpen(false)}>Industry</a>
         <a href="#store" onClick={() => setMenuOpen(false)}>Store</a>
