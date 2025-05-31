@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import "./AISection.css";
 import mascotIcon from '../assets/ai-mascot.svg';
@@ -10,10 +10,15 @@ const sparkleVariants = {
 };
 
 const AISection = () => {
+  const [isSlideActive, setIsSlideActive] = useState(false);
   const headingRef = useRef(null);
   const headingInView = useInView(headingRef, { once: true, margin: "-100px" });
   const boxRef = useRef(null);
   const boxInView = useInView(boxRef, { once: true, margin: "-100px" });
+
+  const toggleSlide = () => {
+    setIsSlideActive(!isSlideActive);
+  };
 
   // Scroll-based animation for floating SVGs
   const { scrollY } = useScroll();
@@ -41,19 +46,39 @@ const AISection = () => {
         you get ongoing leverage.
       </div>
       <div className="ai-box ai-box-custom">
-        <div className="ai-box-content">
-          <div className="ai-box-title">Cluserx</div>
-          <ul className="ai-feature-list">
-            <li>Continuous Optimization</li>
-            <li>Always aligned with latest tech</li>
-            <li>Weekly calls + expert input</li>
-            <li>you gain a strategic partner</li>
-            <li>Evolving roadmap as your needs grow</li>
-          </ul>
-        </div>
-        <div className="ai-vertical-divider">
-          <div className="ai-divider-badge">
-            <span className="ai-divider-lines"></span>
+        <div className="ai-slider-wrapper">
+          <div className={`ai-slider-container ${isSlideActive ? 'slide-active' : ''}`}>
+            <div className="ai-slide ai-slide-1">
+              <div className="ai-box-content">
+                <div className="ai-box-title">Cluserx</div>
+                <ul className="ai-feature-list">
+                  <li>Continuous Optimization</li>
+                  <li>Always aligned with latest tech</li>
+                  <li>Weekly calls + expert input</li>
+                  <li>You gain a strategic partner</li>
+                  <li>Evolving roadmap as your needs grow</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="ai-slide ai-slide-2">
+              <div className="ai-box-content">
+                <div className="ai-box-title">Why Choose Us</div>
+                <ul className="ai-feature-list">
+                  <li>Proven track record</li>
+                  <li>Industry-leading expertise</li>
+                  <li>24/7 dedicated support</li>
+                  <li>Custom solutions for your needs</li>
+                  <li>Cutting-edge technology</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div className="ai-vertical-divider" onClick={toggleSlide}>
+            <div className="ai-divider-badge">
+              <span className={`ai-divider-lines ${isSlideActive ? 'active' : ''}`}></span>
+            </div>
           </div>
         </div>
       </div>

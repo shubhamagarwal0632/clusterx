@@ -16,7 +16,7 @@
   width: 100%;
   max-width: 1300px;
   min-height: 450px;
-  gap: 40px;
+  /* gap: 40px; */
   align-items: stretch;
 }
 

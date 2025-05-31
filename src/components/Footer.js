@@ -1,9 +1,59 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Footer.css";
 
-const Footer = () => (
+const Footer = () => {
+  const bannerRef = useRef(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    let ticking = false;
+    let lastScrollY = window.scrollY;
+    
+    const updateProgress = () => {
+      if (!bannerRef.current) return;
+      
+      const rect = bannerRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Calculate how much of the element is visible (0 to 1)
+      const visibleHeight = Math.max(0, Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0));
+      const progress = Math.min(1, visibleHeight / rect.height);
+      
+      // Update the CSS variable directly
+      bannerRef.current.style.setProperty('--scroll-progress', progress);
+      
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      lastScrollY = window.scrollY;
+      
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateProgress();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    // Initial check
+    handleScroll();
+    
+    // Add scroll event listener with debouncing
+    const scrollOptions = { passive: true };
+    window.addEventListener('scroll', handleScroll, scrollOptions);
+    window.addEventListener('resize', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll, scrollOptions);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
+  return (
   <footer className="footer">
-    <div className="footer-ai-banner">
+    <div className="footer-ai-banner" ref={bannerRef}>
       We Build <span className="footer-ai-glow"> Ai </span> Employees
     </div>
     <div className="footer-main">
@@ -13,7 +63,7 @@ const Footer = () => (
           Join the pracharwave community and be flexible in managing your contacts. Connect with us on social media for updates, tips, and more!
         </p>
         <div className="footer-contact">
-          <a href="tel:+919999999999">+91 99999 99999</a> or <a href="mailto:support@xjatin.com">support@xjatin.com</a>
+          <a href="tel:+919999999999">+91 99999 99999</a> or <a href="mailto:teamclusterx@gmail.com">teamclusterx@gmail.com</a>
         </div>
       </div>
       <div className="footer-col">
@@ -55,7 +105,5 @@ const Footer = () => (
       </div>
     </div>
   </footer>
-);
-
+  );};
 export default Footer;
-

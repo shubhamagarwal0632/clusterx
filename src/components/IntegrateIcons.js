@@ -69,3 +69,10 @@ export const IconCenter = () => (
     <path d="M32 32l24 24M56 32L32 56" stroke="#fff" strokeWidth="4" strokeLinecap="round" />
   </svg>
 );
+
+export const Group2147225764 = () => (
+  <svg width="88" height="88" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="44" cy="44" r="44" fill="#FF6600"/>
+    <path d="M32 32L56 56M32 56L56 32" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  </svg>
+);

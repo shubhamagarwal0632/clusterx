@@ -25,16 +25,15 @@
 }
 
 .footer-ai-banner {
-  background:
-    radial-gradient(circle at 55% 50%, #02010144 0%, #181210 60%, #181210 100%),
-    url('../assets/footer-banner-bg.png') center center/cover no-repeat;
+  background: 
+    radial-gradient(circle at 55% 50%, #000000 0%, #000000 60%, #181210 100%);
   background-blend-mode: lighten;
   border-radius: 22px;
   margin: 0 auto 3rem;
   max-width: 1300px;
   border: 0.5px solid gray;
   width: 100%;
-  min-height: 200px;
+  min-height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,13 +41,87 @@
   overflow: hidden;
   box-shadow: 0 6px 40px 0 rgba(0,0,0,0.22);
   font-size: 5.2rem;
-  /* font-weight: 800; */
   letter-spacing: 0.01em;
   text-align: center;
   line-height: 1.1;
-  text-shadow: 0 4px 32px #ff6a2f33, 0 1px 0 #fff4, 0 0 2px #000a, 0 0 12px #fff2;
+  text-shadow: 0 4px 32px #ff6a2f33, 0 1px 0 #fff4, 0 0 2px #000a, 0 0 12px rgb(0, 0, 0);
   padding: 3.5rem 0rem;
-  transition: all 0.2s;
+  opacity: 1;
+  transform: translateY(0);
+  will-change: transform, opacity;
+  background-color: black;
+}
+
+@keyframes backgroundZoom {
+  0% {
+    background-size: 100% auto;
+  }
+  100% {
+    background-size: 110% auto;
+  }
+}
+
+.footer-ai-banner.visible::after {
+  height: 100%;
+  opacity: 1;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animated lines container */
+.footer-ai-banner {
+  --scroll-progress: 0;
+  position: relative;
+}
+
+.footer-ai-banner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../../public/footer-banner-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: lighten;
+  z-index: 0;
+  opacity: 1;
+  transform: scaleY(var(--scroll-progress, 0));
+  transform-origin: top center;
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* Gradient overlay */
+.footer-ai-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,106,47,0.15) 0%, rgba(255,106,47,0) 50%);
+  z-index: 1;
+  opacity: var(--scroll-progress, 0);
+  transition: opacity 0.1s ease-out;
+  pointer-events: none;
+}
+
+/* Content wrapper to ensure text stays above the animated background */
+.footer-ai-banner > * {
+  position: relative;
+  z-index: 2;
 }
 
 .footer-ai-glow {

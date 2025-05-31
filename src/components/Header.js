@@ -32,14 +32,14 @@ const Header = () => {
     <header className="header animate-fadein" ref={headerRef}>
       <div style={{ display: "flex", gap: 25, alignItems: "center" }}>
         <div className="header-logo" ref={logoRef} style={{ opacity: 0, transition: 'opacity 0.5s ease-in-out' }}>
-          <Logo style={{ height: 24 }} />
+          <Logo style={{ height: 32 }} />
         </div>
       <nav className={`header-nav${menuOpen ? " open" : ""}`}>
         <a href="#industry" onClick={() => setMenuOpen(false)}>Industry</a>
         <a href="#store" onClick={() => setMenuOpen(false)}>Store</a>
         <a href="#resources" onClick={() => setMenuOpen(false)}>Resources</a>
         <a href="#company" onClick={() => setMenuOpen(false)}>Company</a>
-        <a href="#faq" onClick={() => setMenuOpen(false)}>FAQ</a>
+        {/* <a href="#faq" onClick={() => setMenuOpen(false)}>FAQ</a> */}
         {/* Show CTA inside nav on mobile */}
         <span className="header-cta-mobile">
           <button className="header-cta" onClick={() => setMenuOpen(false)}></button>

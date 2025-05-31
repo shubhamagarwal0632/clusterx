@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { IconCalendar, IconGrid, IconCalendarCheck, IconMic, IconUser, IconClipboard, IconCenter } from "./IntegrateIcons";
+import { IconCalendar, IconGrid, IconCalendarCheck, IconMic, IconUser, IconClipboard } from "./IntegrateIcons";
+import Group2147225764 from "../assets/Group 2147225764.svg";
 import "./IntegrateSection.css";
 
 const icons = [
@@ -17,7 +18,17 @@ const IntegrateSection = () => {
   const visualRef = useRef(null);
   const inView = useInView(sectionRef, { once: true, margin: "-100px" });
   const [angle, setAngle] = useState(0);
-const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [hoveredIcon, setHoveredIcon] = useState(null);
+  
+  const iconTitles = [
+    "Calendar",
+    "Grid View",
+    "Schedule",
+    "Voice",
+    "Profile",
+    "Clipboard"
+  ];
   const [containerSize, setContainerSize] = useState(520);
   const requestRef = useRef();
 
@@ -57,8 +68,8 @@ const [paused, setPaused] = useState(false);
   }, []);
   // .ring3 is 92% of container, icon is 15% of container
   const iconSize = containerSize * 0.15;
-  // For perfect alignment with the outer edge of icons on .ring3 (outermost ring)
-  const radius = (containerSize * 1.1 - iconSize) / 2;
+  // Adjust the radius to bring icons closer to the center
+  const radius = (containerSize * 0.9 - iconSize) / 2;
 
   const parentVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -79,13 +90,25 @@ const childVariants = {
   visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, type: "spring", stiffness: 90 } }
 };
 
-return (
+  const handleMouseEnter = () => {
+    setPaused(true);
+    document.querySelector('.integrate-center-circle').style.animationPlayState = 'paused';
+  };
+
+  const handleMouseLeave = () => {
+    setPaused(false);
+    document.querySelector('.integrate-center-circle').style.animationPlayState = 'running';
+  };
+
+  return (
     <section
       ref={sectionRef}
       className="integrate-section"
       variants={parentVariants}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="integrate-header-centered" variants={childVariants}>
         <div className="integrate-badge" variants={childVariants}>
@@ -101,8 +124,17 @@ return (
       {/* Responsive orbiting icons - FIXED version */}
       <div className="integrate-visual" variants={childVariants} ref={visualRef}>
         <div className="integrate-glow" />
-        <div className="integrate-center-circle">
-          <IconCenter />
+        <div 
+          className="integrate-center-circle"
+          style={{
+            animationPlayState: paused ? 'paused' : 'running'
+          }}
+        >
+          <img 
+            src={Group2147225764} 
+            alt="Integration center" 
+            className="center-icon" 
+          />
         </div>
         {[1,2,3].map(num => (
           <div className={`integrate-ring ring${num}`} key={num}></div>
@@ -114,20 +146,27 @@ return (
           const x = Math.cos(totalAngle) * radius;
           const y = Math.sin(totalAngle) * radius;
           return (
-            <div
-              className="integrate-icon"
+            <div 
               key={i}
+              className="icon-container"
               style={{
-                left: `calc(50% + ${x}px)` ,
-                top: `calc(50% + ${y}px)` ,
-                width: iconSize,
-                height: iconSize,
-                transform: 'translate(-50%, -50%)',
+                left: '50%',
+                top: '50%',
+                transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
                 position: 'absolute'
               }}
-              variants={childVariants}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
-              {icon}
+              <div 
+                className="integrate-icon" 
+                style={{
+                  transform: `rotate(${paused ? 0 : angle}deg)`,
+                  transition: 'transform 0.3s ease'
+                }}
+              >
+                {icon}
+              </div>
             </div>
           );
         })}

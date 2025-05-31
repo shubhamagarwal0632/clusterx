@@ -67,32 +67,83 @@
   height: 30%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: #ff6600;
+  background: radial-gradient(ellipse at center, #ff8533 0%, #ff6600 100%);
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  box-shadow: 
+    0 0 20px rgba(255, 102, 0, 0.6),
+    inset 0 4px 10px rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.center-icon {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+  transition: transform 0.3s ease;
+}
+
+.integrate-center-circle:hover .center-icon {
+  transform: scale(1.1);
 }
 
 .center-logo {
   width: 50%;
 }
 
-.integrate-icon {
+/* Icon container */
+.icon-container {
   position: absolute;
-  width: 15%;
-  height: 15%;
-  /* background: #cec499; */
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
+
+/* Icon styles */
+.integrate-icon {
+  width: 70px;  /* Increased from 60px */
+  height: 70px; /* Increased from 60px */
   border-radius: 50%;
-  box-shadow: 0 2px 24px rgba(255, 102, 0, 0.1);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  box-shadow: 
+    0 0 15px rgba(255, 102, 0, 0.3),
+    0 0 30px rgba(255, 102, 0, 0.15),
+    inset 0 0 10px rgba(255, 255, 255, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 50%;
-  left: 50%;
-  transform: rotate(var(--angle)) translate(46%) rotate(calc(-1 * var(--angle)));
-  z-index: 3;
-  border: 1px solid gray;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.integrate-icon:hover {
+  transform: scale(1.2);
+  box-shadow: 
+    0 0 30px rgba(255, 102, 0, 0.5),
+    0 0 50px rgba(255, 102, 0, 0.25),
+    inset 0 0 20px rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.5);
+  z-index: 5;
+}
+
+/* Center logo rotation */
+.integrate-center-circle {
+  transition: all 0.3s ease;
+  animation: rotate 20s linear infinite;
+  animation-play-state: running;
+  transform-origin: center;
+}
+
+@keyframes rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .integrate-icon img {
@@ -102,7 +153,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 38px;
+  /* margin-bottom: 38px; */
+  /* padding: 20px 20px; */
 }
   
 .integrate-badge {
@@ -133,7 +185,7 @@
 
 .integrate-title-centered{
   font-size: 2.8rem;
-  /* font-weight: 800; */
+  font-weight: 800;
   color: #1a2537;
   margin: 0 0 10px 0;
   line-height: 1.1;

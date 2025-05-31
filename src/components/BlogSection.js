@@ -13,7 +13,7 @@ const blogCards = [
     date: "Mar 8, 2024",
     description: "Creating dynamic, responsive websites for seamless user experiences.",
     authorImage: founder,
-    authorName: "Gaurav Mishra",
+    authorName: "Gaurav Mitawa",
     role: "Founder, CEO",
   },
   {
@@ -23,7 +23,7 @@ const blogCards = [
     date: "Mar 8, 2024",
     description: "Creating dynamic, responsive websites for seamless user experiences.",
     authorImage: founder,
-    authorName: "Gaurav Mishra",
+    authorName: "Gaurav Mitawa",
     role: "Founder, CEO",
   },
   {
@@ -33,7 +33,7 @@ const blogCards = [
     date: "Mar 8, 2024",
     description: "Creating dynamic, responsive websites for seamless user experiences.",
     authorImage: founder,
-    authorName: "Gaurav Mishra",
+    authorName: "Gaurav Mitawa",
     role: "Founder, CEO",
   },
 ];
