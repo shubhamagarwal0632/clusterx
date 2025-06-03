@@ -1,24 +1,38 @@
 import './App.css';
-import Header from './components/Header';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-// import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+
+// Components
+import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import FeaturesSection from './components/FeaturesSection';
 import HowItWorksTimeline from './components/HowItWorksTimeline';
 import IntegrateSection from './components/IntegrateSection';
-// import IntegrationsSection from './components/IntegrationsSection';
 import AISection from './components/AISection';
 import TestimonialsSection from './components/TestimonialsSection';
 import FAQSection from './components/FAQSection';
 import BlogSection from './components/BlogSection';
-// import AIServicesSection from './components/AIServicesSection';
 import Footer from './components/Footer';
-import { motion, useScroll, useTransform } from "framer-motion";
-
 import Loader from './components/Loader';
+import TermsAndConditions from './components/TermsAndConditions';
 import './components/Loader.css';
-import { useState, useEffect } from 'react';
+
+const MainContent = () => (
+  <div className="fade-in">
+    <Header />
+    <HeroSection />
+    <FeaturesSection />
+    <HowItWorksTimeline />
+    <IntegrateSection />
+    <AISection />
+    <BlogSection />
+    <TestimonialsSection />
+    <FAQSection />
+    <Footer />
+  </div>
+);
 
 function App() {
   useEffect(() => {
@@ -42,29 +56,19 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
-    <div className="App">
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className="fade-in">
-          {/* Global Animated SVGs (uncomment if needed) */}
-          {/* <motion.svg ...>...</motion.svg> */}
-          <Header />
-          <HeroSection />
-          <FeaturesSection />
-          <HowItWorksTimeline />
-          <IntegrateSection />
-          {/* <IntegrationsSection /> */}
-          <AISection />
-          {/* <AIServicesSection /> */}
-          <BlogSection />
-          <TestimonialsSection />
-          <FAQSection />
-          <Footer />
-        </div>
-      )}
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/fatcamel-termsandconditions" element={<TermsAndConditions />} />
+          <Route path="/" element={<MainContent />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
