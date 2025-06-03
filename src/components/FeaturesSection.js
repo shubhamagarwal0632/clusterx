@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import "./FeaturesSection.css";
 
@@ -39,7 +39,74 @@ const features = [
 
 const FeaturesSection = () => {
   const ref = useRef(null);
+  const badgeRef = useRef(null);
+  const [text, setText] = useState('');
+  const [inView, setInView] = useState(false);
+  const fullText = 'FEATURE';
   const isInView = useInView(ref, { once: true, amount: 0.2 });
+
+  // Typing effect with continuous loop
+  useEffect(() => {
+    let typingInterval;
+    let i = 0;
+    let isTyping = true;
+
+    const startTyping = () => {
+      typingInterval = setInterval(() => {
+        if (isTyping) {
+          if (i < fullText.length) {
+            setText(fullText.substring(0, i + 1));
+            i++;
+          } else {
+            // Pause at the end of the word
+            isTyping = false;
+            setTimeout(() => {
+              // Start deleting after a pause
+              const deleteInterval = setInterval(() => {
+                if (i > 0) {
+                  setText(fullText.substring(0, i - 1));
+                  i--;
+                } else {
+                  clearInterval(deleteInterval);
+                  // Start typing again after a short pause
+                  setTimeout(() => {
+                    isTyping = true;
+                  }, 300);
+                }
+              }, 50);
+            }, 1000);
+          }
+        }
+      }, 100);
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          startTyping();
+        } else {
+          setInView(false);
+          // Reset when out of view
+          clearInterval(typingInterval);
+          setText('');
+          i = 0;
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+    
+    if (badgeRef.current) {
+      observer.observe(badgeRef.current);
+    }
+    
+    return () => {
+      clearInterval(typingInterval);
+      if (badgeRef.current) {
+        observer.unobserve(badgeRef.current);
+      }
+    };
+  }, []);
   
   // Animation variants for the container
   const container = {
@@ -102,35 +169,51 @@ const FeaturesSection = () => {
 
   return (
     <section className="features-section" id="industry" ref={ref}>
-      <div className="integrate-header-centered">
-      <motion.div 
-        className="feature-tag"
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ 
-          opacity: 1, 
-          y: 0,
-          transition: { 
-            duration: 0.6,
-            ease: [0.16, 1, 0.3, 1]
-          }
-        }}
-        viewport={{ once: true, margin: "-20% 0px" }}
-      >
-        <motion.span 
-          className="dot"
-          initial={{ scale: 0 }}
-          whileInView={{ 
-            scale: 1,
-            transition: {
-              type: 'spring',
-              stiffness: 300,
-              damping: 15
+      <div className="integrate-header-centered" ref={badgeRef}>
+        <motion.div 
+          className="feature-badge"
+          initial={{ opacity: 0, y: 10 }}
+          animate={inView ? { 
+            opacity: 1, 
+            y: 0,
+            transition: { 
+              duration: 0.6,
+              ease: [0.16, 1, 0.3, 1]
             }
-          }}
-          viewport={{ once: true }}
-        /> 
-        FEATURE
-      </motion.div>
+          } : {}}
+        >
+          <motion.span 
+            className="feature-dot"
+            initial={{ y: -20, opacity: 0 }}
+            animate={inView ? { 
+              y: 0, 
+              opacity: 1,
+              scale: [1, 1.2, 0.9, 1.1, 1]
+            } : {}}
+            transition={{
+              y: { type: "spring", damping: 10, stiffness: 100, mass: 0.5 },
+              opacity: { duration: 0.4 },
+              scale: { 
+                duration: 0.8,
+                times: [0, 0.3, 0.6, 0.8, 1],
+                delay: 0.5
+              }
+            }}
+          />
+          <span className="feature-text">
+            {text}
+            <motion.span 
+              className="cursor"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: text === fullText ? 0 : 1 }}
+              transition={{ 
+                repeat: Infinity, 
+                duration: 0.7,
+                repeatType: 'reverse' 
+              }}
+            />
+          </span>
+        </motion.div>
       </div>
       
       <motion.h2 

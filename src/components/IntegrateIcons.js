@@ -1,3 +1,6 @@
+import React, { useRef, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+
 // SVG React components for each integration icon in your image
 // You can swap these for your own SVGs if you prefer
 
@@ -63,12 +66,79 @@ export const IconClipboard = () => (
   </svg>
 );
 
-export const IconCenter = () => (
-  <svg width="88" height="88" fill="none" viewBox="0 0 88 88">
-    <circle cx="44" cy="44" r="44" fill="#FF6600" />
-    <path d="M32 32l24 24M56 32L32 56" stroke="#fff" strokeWidth="4" strokeLinecap="round" />
-  </svg>
-);
+export const IconCenter = ({ onAnimationComplete }) => {
+  const dotRef = useRef(null);
+  const [inView, setInView] = useState(false);
+  const [text, setText] = useState('');
+  const fullText = 'INTEGRATIONS';
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          let i = 0;
+          const typingInterval = setInterval(() => {
+            if (i < fullText.length) {
+              setText(fullText.substring(0, i + 1));
+              i++;
+            } else {
+              if (onAnimationComplete) onAnimationComplete();
+              clearInterval(typingInterval);
+            }
+          }, 50);
+          
+          observer.disconnect();
+          return () => clearInterval(typingInterval);
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+    
+    if (dotRef.current) {
+      observer.observe(dotRef.current);
+    }
+    
+    return () => {
+      observer.disconnect();
+      setText('');
+    };
+  }, []);
+
+  return (
+    <div className="integrate-center-container">
+      <motion.div
+        ref={dotRef}
+        className="integrate-dot"
+        initial={{ y: -20, opacity: 0 }}
+        animate={inView ? { y: 0, opacity: 1 } : {}}
+        transition={{
+          y: { type: "spring", damping: 10, stiffness: 100, mass: 0.5 },
+          opacity: { duration: 0.4 }
+        }}
+      />
+      <div className="integrate-text">
+        {text}
+        <motion.span 
+          className="cursor"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: text === fullText ? 0 : 1 }}
+          transition={{ 
+            repeat: Infinity, 
+            duration: 0.7,
+            repeatType: 'reverse' 
+          }}
+        >
+          |
+        </motion.span>
+      </div>
+      <svg width="88" height="88" fill="none" viewBox="0 0 88 88">
+        <circle cx="44" cy="44" r="44" fill="#FF6600" />
+        <path d="M32 32l24 24M56 32L32 56" stroke="#fff" strokeWidth="4" strokeLinecap="round" />
+      </svg>
+    </div>
+  );
+};
 
 export const Group2147225764 = () => (
   <svg width="88" height="88" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">

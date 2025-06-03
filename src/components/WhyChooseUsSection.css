@@ -5,14 +5,47 @@
   font-family: 'Arial', sans-serif;
 }
 
-.section-header .badge {
-  display: inline-block;
+.blog-badge {
+  display: inline-flex;
+  align-items: center;
   background: #000;
   color: white;
-  padding: 5px 14px;
+  padding: 5px 16px 5px 12px;
   font-size: 13px;
   border-radius: 999px;
   margin-bottom: 12px;
+  min-width: 80px;
+  justify-content: center;
+}
+
+.integrate-dot {
+  width: 8px;
+  height: 8px;
+  background: #ff6a2f;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.integrate-text {
+  position: relative;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.cursor {
+  position: absolute;
+  right: -8px;
+  width: 2px;
+  height: 1em;
+  background: white;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .section-header h2 {

@@ -16,10 +16,80 @@ const icons = [
 const IntegrateSection = () => {
   const sectionRef = useRef(null);
   const visualRef = useRef(null);
-  const inView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const dotRef = useRef(null);
+  const [inView, setInView] = useState(false);
+  const [text, setText] = useState('');
+  const inSectionView = useInView(sectionRef, { once: true, margin: "-100px" });
   const [angle, setAngle] = useState(0);
   const [paused, setPaused] = useState(false);
   const [hoveredIcon, setHoveredIcon] = useState(null);
+  const fullText = 'INTEGRATIONS';
+
+  // Check if dot is in viewport while scrolling
+  useEffect(() => {
+    let typingInterval;
+    let i = 0;
+    let isTyping = true;
+
+    const startTyping = () => {
+      typingInterval = setInterval(() => {
+        if (isTyping) {
+          if (i < fullText.length) {
+            setText(fullText.substring(0, i + 1));
+            i++;
+          } else {
+            // Pause at the end of the word
+            isTyping = false;
+            setTimeout(() => {
+              // Start deleting after a pause
+              const deleteInterval = setInterval(() => {
+                if (i > 0) {
+                  setText(fullText.substring(0, i - 1));
+                  i--;
+                } else {
+                  clearInterval(deleteInterval);
+                  // Start typing again after a short pause
+                  setTimeout(() => {
+                    isTyping = true;
+                  }, 300);
+                }
+              }, 50);
+            }, 1000);
+          }
+        }
+      }, 80); // Slightly faster typing speed
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          startTyping();
+        } else {
+          setInView(false);
+          // Reset when out of view
+          clearInterval(typingInterval);
+          setText('');
+          i = 0;
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    if (dotRef.current) {
+      observer.observe(dotRef.current);
+    }
+
+    return () => {
+      clearInterval(typingInterval);
+      if (dotRef.current) {
+        observer.unobserve(dotRef.current);
+      }
+    };
+  }, []);
   
   const iconTitles = [
     "Calendar",
@@ -112,8 +182,37 @@ const childVariants = {
     >
       <div className="integrate-header-centered" variants={childVariants}>
         <div className="integrate-badge" variants={childVariants}>
-          <span className="integrate-dot" />
-          <span className="integrate-text">INTEGRATIONS</span>
+          <motion.span 
+            ref={dotRef}
+            className="integrate-dot"
+            initial={{ y: -20, opacity: 0 }}
+            animate={inView ? {
+              y: 0, 
+              opacity: 1,
+            } : {}}
+            transition={{
+              y: { 
+                type: "spring",
+                damping: 10,
+                stiffness: 100,
+                mass: 0.5
+              },
+              opacity: { duration: 0.4 }
+            }}
+          />
+          <span className="integrate-text">
+            {text}
+            <motion.span 
+              className="cursor"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: text === fullText ? 0 : 1 }}
+              transition={{ 
+                repeat: Infinity, 
+                duration: 0.7,
+                repeatType: 'reverse' 
+              }}
+            />
+          </span>
         </div>
         <h2 className="integrate-title-centered" variants={childVariants}>Integrate Wherever You Want</h2>
         <div className="integrate-subtitle-centered" variants={childVariants}>
