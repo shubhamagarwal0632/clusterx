@@ -42,13 +42,26 @@ const Header = () => {
         {/* <a href="#faq" onClick={() => setMenuOpen(false)}>FAQ</a> */}
         {/* Show CTA inside nav on mobile */}
         <span className="header-cta-mobile">
-          <button className="header-cta" onClick={() => setMenuOpen(false)}></button>
+          <button 
+            className="header-cta" 
+            onClick={() => {
+              setMenuOpen(false);
+              window.open('https://calendly.com/gauravsmitawa/40min', '_blank', 'noopener,noreferrer');
+            }}
+          >
+            Contact us
+          </button>
         </span>
       </nav>
       </div>
       {/* Show CTA outside nav only on desktop */}
       <span className="header-cta-desktop">
-        <button className="header-cta">Contact us</button>
+        <button 
+          className="header-cta"
+          onClick={() => window.open('https://calendly.com/gauravsmitawa/40min', '_blank', 'noopener,noreferrer')}
+        >
+          Discovery call
+        </button>
       </span>
       <button className={`hamburger${menuOpen ? ' open' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ff6a2f" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
