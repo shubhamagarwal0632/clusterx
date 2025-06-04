@@ -10,14 +10,49 @@ const sparkleVariants = {
 };
 
 const AISection = () => {
-  const [isSlideActive, setIsSlideActive] = useState(false);
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const sliderRef = useRef(null);
+  const containerRef = useRef(null);
+  const isDragging = useRef(false);
   const headingRef = useRef(null);
   const headingInView = useInView(headingRef, { once: true, margin: "-100px" });
   const boxRef = useRef(null);
   const boxInView = useInView(boxRef, { once: true, margin: "-100px" });
 
-  const toggleSlide = () => {
-    setIsSlideActive(!isSlideActive);
+  const startDragging = (e) => {
+    e.preventDefault();
+    isDragging.current = true;
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', stopDragging);
+    document.addEventListener('touchmove', onDrag, { passive: false });
+    document.addEventListener('touchend', stopDragging);
+  };
+
+  const onDrag = (e) => {
+    if (!isDragging.current) return;
+    
+    e.preventDefault();
+    const container = containerRef.current;
+    if (!container) return;
+    
+    const containerRect = container.getBoundingClientRect();
+    let x = e.clientX || (e.touches && e.touches[0].clientX);
+    
+    // Calculate position as percentage (0-100)
+    let position = ((x - containerRect.left) / containerRect.width) * 100;
+    
+    // Keep position within bounds
+    position = Math.min(Math.max(position, 10), 90);
+    
+    setSliderPosition(position);
+  };
+
+  const stopDragging = () => {
+    isDragging.current = false;
+    document.removeEventListener('mousemove', onDrag);
+    document.removeEventListener('mouseup', stopDragging);
+    document.removeEventListener('touchmove', onDrag);
+    document.removeEventListener('touchend', stopDragging);
   };
 
   // Scroll-based animation for floating SVGs
@@ -45,39 +80,44 @@ const AISection = () => {
         AI is not static. With us, you get more than implementation<br />
         you get ongoing leverage.
       </div>
-      <div className="ai-box ai-box-custom">
-        <div className="ai-slider-wrapper">
-          <div className={`ai-slider-container ${isSlideActive ? 'slide-active' : ''}`}>
-            <div className="ai-slide ai-slide-1">
-              <div className="ai-box-content">
-                <div className="ai-box-title">Cluserx</div>
-                <ul className="ai-feature-list">
-                  <li>Continuous Optimization</li>
-                  <li>Always aligned with latest tech</li>
-                  <li>Weekly calls + expert input</li>
-                  <li>You gain a strategic partner</li>
-                  <li>Evolving roadmap as your needs grow</li>
-                </ul>
-              </div>
-            </div>
-            
-            <div className="ai-slide ai-slide-2">
-              <div className="ai-box-content">
-                <div className="ai-box-title">Why Choose Us</div>
-                <ul className="ai-feature-list">
-                  <li>Proven track record</li>
-                  <li>Industry-leading expertise</li>
-                  <li>24/7 dedicated support</li>
-                  <li>Custom solutions for your needs</li>
-                  <li>Cutting-edge technology</li>
-                </ul>
-              </div>
+      <div className="ai-box ai-box-custom" ref={containerRef}>
+        <div className="ai-comparison-wrapper">
+          <div className="ai-slide ai-slide-1" style={{ width: `${sliderPosition}%` }}>
+            <div className="ai-box-content">
+              <div className="ai-box-title">Cluserx</div>
+              <ul className="ai-feature-list">
+                <li>Continuous Optimization</li>
+                <li>Always aligned with latest tech</li>
+                <li>Weekly calls + expert input</li>
+                <li>You gain a strategic partner</li>
+                <li>Evolving roadmap as your needs grow</li>
+              </ul>
             </div>
           </div>
           
-          <div className="ai-vertical-divider" onClick={toggleSlide}>
-            <div className="ai-divider-badge">
-              <span className={`ai-divider-lines ${isSlideActive ? 'active' : ''}`}></span>
+          <div 
+            className="ai-divider" 
+            onMouseDown={startDragging}
+            onTouchStart={startDragging}
+            style={{ left: `${sliderPosition}%` }}
+          >
+            <div className="ai-divider-handle">
+              <span className="ai-divider-line"></span>
+              <div className="ai-divider-arrow left">❮</div>
+              <div className="ai-divider-arrow right">❯</div>
+            </div>
+          </div>
+          
+          <div className="ai-slide ai-slide-2" style={{ width: `${100 - sliderPosition}%` }}>
+            <div className="ai-box-content">
+              <div className="ai-box-title">Why Choose Us</div>
+              <ul className="ai-feature-list">
+                <li>Proven track record</li>
+                <li>Industry-leading expertise</li>
+                <li>24/7 dedicated support</li>
+                <li>Custom solutions for your needs</li>
+                <li>Cutting-edge technology</li>
+              </ul>
             </div>
           </div>
         </div>
