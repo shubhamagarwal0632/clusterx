@@ -63,7 +63,8 @@ const Footer = () => {
           Join the pracharwave community and be flexible in managing your contacts. Connect with us on social media for updates, tips, and more!
         </p>
         <div className="footer-contact">
-          <a href="tel:+919999999999">+91 99999 99999</a> or <a href="mailto:teamclusterx@gmail.com">teamclusterx@gmail.com</a>
+          {/* <a href="tel:+919999999999">+91 99999 99999</a> or  */}
+          <a href="mailto:teamclusterx@gmail.com">teamclusterx@gmail.com</a>
         </div>
       </div>
       <div className="footer-col">

@@ -17,6 +17,10 @@ import BlogSection from './components/BlogSection';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
 import TermsAndConditions from './components/TermsAndConditions';
+import BlogPage from './pages/BlogPage';
+import BlogPostPage from './components/BlogPostPage';
+import ContactUsPage from './pages/ContactUsPage';
+import UserDetails from './pages/UserDetails';
 import './components/Loader.css';
 
 const MainContent = () => (
@@ -65,6 +69,10 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/fatcamel-termsandconditions" element={<TermsAndConditions />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:id" element={<BlogPostPage />} />
+          <Route path="/contact" element={<ContactUsPage />} />
+          <Route path="/user/:userId" element={<UserDetails />} />
           <Route path="/" element={<MainContent />} />
         </Routes>
       </div>
