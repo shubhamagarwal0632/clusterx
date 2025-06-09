@@ -3,39 +3,43 @@ import { motion, useInView } from "framer-motion";
 import "./WhyChooseUsSection.css";
 
 // Import images using ES6 imports
-import cardig from '../assets/cardig.png';
-import founder from '../assets/founder.png';
+import blog1 from '../assets/blog1.jpeg';
+import blog2 from '../assets/blog2.jpg';
+import blogimage from '../assets/blogimage.jpg';
+import profile1 from '../assets/photo1.jpeg';
+import profile2 from '../assets/photo2.jpeg';
+import profileimage from '../assets/photoimage.jpeg';
 
 const blogCards = [
   {
     id: 1,
-    image: cardig,
-    title: "Web Development",
+    image: blog1,
+    title: "AI Agents",
     date: "Mar 8, 2024",
-    description: "Creating dynamic, responsive websites for seamless user experiences.",
-    authorImage: founder,
-    authorName: "Gaurav Mitawa",
-    role: "Founder, CEO",
+    description: "Automate workflows, answer queries, and take action — all without human intervention.",
+    authorImage: profile1,
+    authorName: "Sarah Johnson",
+    role: "AI Specialist"
   },
   {
     id: 2,
-    image: cardig,
-    title: "Web Development",
-    date: "Mar 8, 2024",
-    description: "Creating dynamic, responsive websites for seamless user experiences.",
-    authorImage: founder,
-    authorName: "Gaurav Mitawa",
-    role: "Founder, CEO",
+    image: blog2,
+    title: "AI Voice Agents",
+    date: "Jan 8, 2025",
+    description: "Voice-powered agents that talk to your customers, 24/7.",
+    authorImage: profile2,
+    authorName: "Michael Chen",
+    role: "Voice Tech Lead"
   },
   {
     id: 3,
-    image: cardig,
-    title: "Web Development",
-    date: "Mar 8, 2024",
-    description: "Creating dynamic, responsive websites for seamless user experiences.",
-    authorImage: founder,
-    authorName: "Gaurav Mitawa",
-    role: "Founder, CEO",
+    image: blogimage,
+    title: "AI Business Consultation",
+    date: "Oct 8, 2024",
+    description: "Let AI analyze your data and guide smarter decisions.",
+    authorImage: profileimage,
+    authorName: "Emily Rodriguez",
+    role: "Business Consultant"
   },
 ];
 
