@@ -1,0 +1,76 @@
+/* Rotating Word Effect with Right-to-Left Animation */
+.rotating-word-container {
+  display: inline-block;
+  position: relative;
+  min-width: 200px;
+  text-align: left;
+  height: 1.2em;
+  vertical-align: top;
+  overflow: hidden;
+}
+
+.rotating-word {
+  display: inline-block;
+  position: relative;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.rotating-word.fade {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.rotating-word.entering {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+/* Typewriter Effect */
+.rotating-word-container {
+  display: inline-block;
+  position: relative;
+  min-width: 200px;
+  text-align: left;
+  height: 1.2em;
+  vertical-align: top;
+}
+
+.typewriter-text {
+  display: inline-block;
+  position: relative;
+  color: #E0551C;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #E0551C;
+  animation: typing 0.1s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #E0551C; }
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: #E0551C;
+  margin-left: 2px;
+  animation: blink 0.7s infinite;
+  vertical-align: middle;
+  transform: translateY(-1px);
+  opacity: 0.8;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

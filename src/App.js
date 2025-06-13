@@ -1,4 +1,4 @@
-import './App.css';
+  import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -21,6 +21,9 @@ import BlogPage from './pages/BlogPage';
 import BlogPostPage from './components/BlogPostPage';
 import ContactUsPage from './pages/ContactUsPage';
 import UserDetails from './pages/UserDetails';
+import PodcastPage from './pages/PodcastPage';
+import DiscoveryCallPage from './pages/DiscoveryCallPage';
+import TeamPage from './pages/TeamPage';
 import './components/Loader.css';
 
 const MainContent = () => (
@@ -73,7 +76,11 @@ function App() {
           <Route path="/blog/:id" element={<BlogPostPage />} />
           <Route path="/contact" element={<ContactUsPage />} />
           <Route path="/user/:userId" element={<UserDetails />} />
+          <Route path="/podcast" element={<PodcastPage />} />
+          <Route path="/discovery-call" element={<DiscoveryCallPage />} />
+          <Route path="/team" element={<TeamPage />} />
           <Route path="/" element={<MainContent />} />
+          <Route path="*" element={<MainContent />} />
         </Routes>
       </div>
     </Router>

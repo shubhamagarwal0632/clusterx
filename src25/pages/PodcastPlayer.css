@@ -1,0 +1,207 @@
+.mic-player {
+  position: relative;
+  width: 350px;
+  height: 500px;
+  margin: 0 auto;
+}
+
+/* Top Left Audio Waveform */
+.audio-indicator {
+  position: absolute;
+  top: 20px;
+  left: -40px;
+  display: flex;
+  align-items: center;
+  background: #FF6B35;
+  padding: 8px 15px 8px 10px;
+  border-radius: 50px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+.audio-play-btn {
+  background: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #FF6B35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 10px;
+  padding-left: 2px;
+  margin-right: 10px;
+}
+
+.waveform {
+  display: flex;
+  align-items: flex-end;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.waveform-bar {
+  width: 3px;
+  background: white;
+  margin: 0 2px;
+  border-radius: 2px;
+  animation: wave 1.5s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.5); }
+  50% { transform: scaleY(1.5); }
+}
+
+.user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid white;
+  object-fit: cover;
+}
+
+.user-avatar.right {
+  position: absolute;
+  bottom: 100px;
+  right: -20px;
+  width: 45px;
+  height: 45px;
+  z-index: 10;
+}
+
+/* Main Mic Shape */
+.mic-shape {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mic-outer-glow {
+  width: 100%;
+  height: 85%;
+  background: rgba(255, 107, 53, 0.2);
+  border-radius: 50% 50% 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.mic-inner {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #FFF5F0, #FFE0D1);
+  border-radius: 50% 50% 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.host-image-container {
+  width: 90%;
+  height: 90%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.host-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50% 50% 0 0;
+}
+
+.play-btn-container {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 5px 15px;
+  border-radius: 50px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.main-play-btn {
+  background: #FF6B35;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  padding-left: 2px;
+  margin-right: 10px;
+}
+
+.waveform-small {
+  display: flex;
+  align-items: flex-end;
+  height: 20px;
+}
+
+.waveform-small-bar {
+  width: 2px;
+  background: #FF6B35;
+  margin: 0 1px;
+  border-radius: 1px;
+  animation: wave 1.5s ease-in-out infinite;
+}
+
+/* Mic Stand */
+.mic-stand {
+  width: 60%;
+  height: 8px;
+  background: #FF6B35;
+  position: relative;
+  z-index: 2;
+  display: block !important; /* Ensure it's always displayed */
+  opacity: 1 !important; /* Ensure full visibility */
+  transition: none !important; /* Remove any transitions that might affect visibility */
+}
+
+.mic-stand::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 15px;
+  height: 15px;
+  background: #FF6B35;
+  border-radius: 50%;
+  display: block !important;
+  opacity: 1 !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .mic-player {
+    transform: scale(0.8);
+  }
+  
+  .audio-indicator {
+    left: 0;
+  }
+  
+  .user-avatar.right {
+    right: 0;
+  }
+}

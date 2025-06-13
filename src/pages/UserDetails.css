@@ -240,7 +240,7 @@
 .back-button {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #4299e1;
+  background-color: #ff6a2f;
   color: white;
   text-decoration: none;
   border-radius: 6px;
@@ -249,7 +249,7 @@
 }
 
 .back-button:hover {
-  background-color: #3182ce;
+  background-color: #9c705e;
 }
 
 /* Responsive Design */

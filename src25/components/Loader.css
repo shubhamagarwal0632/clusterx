@@ -1,0 +1,196 @@
+/* Loader Overlay */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #1a120b;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s ease-out;
+  will-change: opacity, visibility;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Hide loader when complete */
+.loader-overlay.complete {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Logo container */
+.loader-logo-container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  will-change: transform, width, height, top, left, opacity;
+  transform-origin: center;
+  pointer-events: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+/* Initial state - centered */
+.loader-logo-container {
+  width: 300px;
+  height: 300px;
+  opacity: 1;
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform: translate(-50%, -50%) scale(1.5);
+}
+
+/* Reveal animation */
+.loader-overlay.revealing .loader-logo-container {
+  transition: clip-path 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Showing state - after reveal, before moving */
+.loader-overlay.showing .loader-logo-container {
+  width: 200px;
+  height: 200px;
+  opacity: 1;
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Moving to header state */
+.loader-overlay.moving-to-header .loader-logo-container {
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Logo mask for reveal effect */
+.logo-mask {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  will-change: clip-path;
+  position: relative;
+}
+
+/* Logo styles */
+.loader-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  will-change: transform, opacity;
+  display: block;
+  position: relative;
+  z-index: 2;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Ensure header logo is hidden during animation */
+.header-logo {
+  opacity: 0;
+  transition: opacity 0.3s ease 0.2s;
+}
+
+/* Show header logo after loader completes */
+.loader-overlay.complete ~ .header .header-logo {
+  opacity: 1;
+  transition-delay: 0s;
+}
+
+/* Prevent content from being interactive during animation */
+body.loading {
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Ensure content is hidden until loader completes */
+.app-content {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.loader-overlay.complete ~ .app-content {
+  opacity: 1;
+}
+
+/* Animation keyframes */
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.95);
+    opacity: 0.9;
+  }
+}
+
+.loader-overlay.expanding .loader-logo-container {
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+/* Final state - moved to header */
+.loader-overlay.moving .loader-logo-container {
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 10001;
+}
+
+.loader-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+/* Ensure the header logo is hidden during animation */
+.header-logo {
+  opacity: 0;
+  transition: opacity 0.3s ease 0.2s; /* Slight delay to ensure smooth transition */
+}
+
+/* Show header logo after loader completes */
+.loader-overlay.complete + .app-content .header-logo {
+  opacity: 1;
+}
+
+/* Prevent scrolling during animation */
+body.loading {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.loader-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+/* Ensure the header logo is hidden during animation */
+.header-logo {
+  opacity: 0;
+  transition: opacity 0.3s ease 0.2s; /* Slight delay to ensure smooth transition */
+}
+
+/* Show header logo after loader completes */
+.loader-overlay.complete + .app-content .header-logo {
+  opacity: 1;
+}
+
+/* Prevent scrolling during animation */
+body.loading {
+  overflow: hidden;
+  height: 100vh;
+}

@@ -1,0 +1,82 @@
+.logo-container {
+  display: inline-block;
+  position: relative;
+  height: 24px; /* Increased from 24px */
+  width: auto;
+  overflow: hidden;
+  will-change: transform;
+  --wave-color-1: rgba(255, 255, 255, 1);
+  --wave-color-2: rgba(255, 235, 150, 0.9);
+  --wave-glow: 0 0 15px rgba(255, 255, 255, 0.9);
+  --wave-glow-2: 0 0 25px rgba(255, 220, 100, 0.8);
+}
+
+/* Logo image container */
+.logo-image-container {
+  position: relative;
+  display: inline-block;
+  height: 100%;
+  width: auto;
+  z-index: 1;
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.1));
+}
+
+/* Logo image styles */
+.logo-image {
+  margin-top: 7px;
+
+  display: block;
+  max-height: 24px; /* Increased from 24px */
+  height: 100%;
+  width: auto;
+  position: relative;
+  z-index: 1;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  filter: brightness(1.05) contrast(1.1);
+}
+
+/* Base wave styles */
+.logo-wave {
+  position: absolute;
+  top: -20%;
+  left: 0;
+  width: 40%;
+  height: 140%;
+  z-index: 2;
+  pointer-events: none;
+  transform: skewX(-15deg) translateX(-100%);
+  will-change: transform;
+  transform-origin: left center;
+  opacity: 1;
+  filter: blur(5px);
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.8) 50%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+}
+
+/* First wave - main bright reflection */
+.logo-wave-1 {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    var(--wave-color-1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  box-shadow: var(--wave-glow);
+}
+
+/* Second wave - secondary warm glow */
+.logo-wave-2 {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    var(--wave-color-2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  filter: blur(8px) brightness(1.2);
+  opacity: 0.7;
+}
