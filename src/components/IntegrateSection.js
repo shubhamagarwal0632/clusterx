@@ -201,17 +201,7 @@ const childVariants = {
             }}
           />
           <span className="integrate-text">
-            {text}
-            <motion.span 
-              className="cursor"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: text === fullText ? 0 : 1 }}
-              transition={{ 
-                repeat: Infinity, 
-                duration: 0.7,
-                repeatType: 'reverse' 
-              }}
-            />
+          INTEGRATIONS
           </span>
         </div>
         <h2 className="integrate-title-centered" variants={childVariants}>Integrate Wherever You Want</h2>

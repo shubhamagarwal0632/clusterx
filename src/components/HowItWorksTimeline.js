@@ -128,20 +128,8 @@ const HowItWorksTimeline = () => {
               }
             }}
           />
-          <span className="workflow-text">
-            {text}
-            <motion.span 
-              className="cursor"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: text === fullText ? 0 : 1 }}
-              transition={{ 
-                repeat: Infinity, 
-                duration: 0.7,
-                repeatType: 'reverse' 
-              }}
-            >
-              |
-            </motion.span>
+          <span className="workflow-text" style={{color:"white"}}>
+          {fullText}
           </span>
         </div>
         <h2 className="howitworks-title-centered">How It Works</h2>

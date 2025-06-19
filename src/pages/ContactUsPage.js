@@ -3,79 +3,79 @@ import { FaQuoteLeft } from 'react-icons/fa';
 import { FiMail, FiPhone, FiMapPin, FiArrowRight } from 'react-icons/fi';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import './ContactUs.css';
+import styles from './ContactUs.module.css';
 
 const ContactUs = () => {
   return (
-    <div className="contact-page">
+    <div className={`${styles.contactPage} ${styles.contactPageContainer}`}>
       <Header />
-      <div className="contact-container">
-        <div className="contact-header">
+      <div className={styles.contactContainer}>
+        <div className={styles.contactHeader}>
           <h2>Contact Us</h2>
-          <p className="subtext">
+          <p className={styles.subtext}>
             Have questions or need assistance? Our team is here to help you with any inquiries or support you may need.
           </p>
-          <button className="live-chat-btn">
+          <button className={styles.liveChatBtn}>
             Live Chat
-            <span className="btn-icon">→</span>
+            <span className={styles.btnIcon}>→</span>
           </button>
         </div>
 
-        <div className="contact-grid">
-          <div className="contact-card">
-            <div className="card-icon">
-              <FiMail className="contact-icon" />
+        <div className={styles.contactGrid}>
+          <div className={styles.contactCard}>
+            <div className={styles.cardIcon}>
+              <FiMail className={styles.contactIcon} />
             </div>
             <h3>Email</h3>
-            <p>support@info.com</p>
-            <a href="mailto:support@info.com" className="card-btn">Contact</a>
+            <p>teamclusterx@gmail.com</p>
+            <a href="mailto:teamclusterx@gmail.com" className={styles.cardBtn}>Contact</a>
           </div>
 
-          <div className="contact-card">
-            <div className="card-icon">
-              <FiPhone className="contact-icon" />
+          <div className={styles.contactCard}>
+            <div className={styles.cardIcon}>
+              <FiPhone className={styles.contactIcon} />
             </div>
             <h3>Phone</h3>
-            <p>Office: +01 234 567 890</p>
-            <a href="tel:+01234567890" className="card-btn">Call</a>
+            <p>Office: +91 96713 81579</p>
+            <a href="tel:+919671381579" className={styles.cardBtn}>Call</a>
           </div>
 
-          <div className="contact-card">
-            <div className="card-icon">
-              <FiMapPin className="contact-icon" />
+          <div className={styles.contactCard}>
+            <div className={styles.cardIcon}>
+              <FiMapPin className={styles.contactIcon} />
             </div>
             <h3>Office</h3>
-            <p>0891 Sygic St, Cellin, Delaware 19209</p>
-            <a href="#" className="card-btn">Locate</a>
+            <p>Bhamashah Techno Hub, Jaipur, Rajasthan (IN)  - 302017</p>
+            <a href="#" className={styles.cardBtn}>Locate</a>
           </div>
         </div>
 
-        <div className="form-section">
-          <div className="quote-box">
-            <FaQuoteLeft className="quote-icon" />
-            <p className="quote-text">
+        <div className={styles.formSection}>
+          <div className={styles.quoteBox}>
+            <FaQuoteLeft className={styles.quoteIcon} />
+            <p className={styles.quoteText}>
               "The passage experienced a surge in popularity during the 1960s when Letraset used it in their dry-transfer sheets, and again during the 90s as desktop publishers bundled the text with their software."
-              <span className="quote-author">Vincent Obi</span>
+              <span className={styles.quoteAuthor}>Vincent Obi</span>
             </p>
           </div>
 
-          <form className="contact-form">
-            <div className="form-group">
+          <form className={styles.contactForm}>
+            <div className={styles.formGroup}>
               <input type="text" placeholder="Your fullname*" required />
             </div>
-            <div className="form-group">
+            <div className={styles.formGroup}>
               <input type="email" placeholder="Email address*" required />
             </div>
-            <div className="form-group">
+            <div className={styles.formGroup}>
               <input type="password" placeholder="Create password*" required />
             </div>
             
-            <div className="form-footer">
-              <div className="terms">
+            <div className={styles.formFooter}>
+              <div className={styles.terms}>
                 <input type="checkbox" id="terms" required />
                 <label htmlFor="terms">I agree to Terms & Conditions</label>
               </div>
-              <button type="submit" className="register-btn">
+              <button type="submit" className={styles.registerBtn}>
                 Register Account
               </button>
             </div>

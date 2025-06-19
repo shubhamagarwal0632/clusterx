@@ -97,9 +97,9 @@
 }
 
 .video-card {
-  background: #fff6f1;
+  background: #fff;
   border-radius: 25px;
-  padding: 2rem 1.5rem;
+  padding: 1.5rem;
   margin: 0;
   transition: all 0.3s ease;
   text-align: center;
@@ -109,9 +109,10 @@
   align-items: center;
   justify-content: flex-start;
   position: relative;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  border: 0.2px solid rgba(122, 118, 118, 0.096);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 @media (min-width: 640px) {
@@ -145,8 +146,16 @@
 .video-card:hover {
   background: #fff;
   transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   z-index: 2;
+}
+
+.video-card:hover h3 {
+  color: #1e40af;
+}
+
+.video-card:hover p {
+  color: #4b5563;
 }
 
 /* Remove hover effect on touch devices */
@@ -160,28 +169,85 @@
 .video-placeholder {
   position: relative;
   background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-  border-radius: 8px;
+}
+
+.video-container {
+  position: relative;
   width: 100%;
-  max-width: 280px;
-  aspect-ratio: 1;
+  max-width: 100%;
+  aspect-ratio: 16/9;
   margin: 0 auto 1.5rem;
+  border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: #000;
+  transition: all 0.3s ease;
+}
+
+.thumbnail-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.video-container.playing .thumbnail-overlay {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 1;
+  transition: all 0.3s ease;
+  z-index: 3;
+  cursor: pointer;
+  backdrop-filter: blur(2px);
 }
 
-@media (min-width: 640px) {
-  .video-placeholder {
-    margin-bottom: 1.8rem;
-  }
+.video-container.playing .play-overlay {
+  opacity: 0;
+  pointer-events: none;
 }
 
-@media (min-width: 1024px) {
-  .video-placeholder {
-    margin-bottom: 2rem;
-  }
+.play-circle {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.play-circle svg {
+  width: 24px;
+  height: 24px;
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+}
+
+.video-card:hover .play-circle {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .play-button {
@@ -230,6 +296,7 @@
   line-height: 1.3;
   width: 100%;
   padding: 0 0.5rem;
+  transition: color 0.2s ease;
 }
 
 @media (min-width: 640px) {
@@ -246,12 +313,13 @@
 }
 
 .video-card p {
-  color: #718096;
-  font-size: 0.9rem;
+  color: #64748b;
+  font-size: 0.95rem;
   line-height: 1.6;
   margin: 0;
   width: 100%;
   padding: 0 0.5rem;
+  transition: color 0.2s ease;
 }
 
 @media (min-width: 640px) {

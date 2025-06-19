@@ -200,18 +200,8 @@ const FeaturesSection = () => {
               }
             }}
           />
-          <span className="feature-text">
-            {text}
-            <motion.span 
-              className="cursor"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: text === fullText ? 0 : 1 }}
-              transition={{ 
-                repeat: Infinity, 
-                duration: 0.7,
-                repeatType: 'reverse' 
-              }}
-            />
+          <span className="feature-text2">
+            {fullText}
           </span>
         </motion.div>
       </div>

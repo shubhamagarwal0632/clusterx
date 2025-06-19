@@ -69,7 +69,7 @@ const WhyChooseUsSection = () => {
                 <span className="card-date">{card.date}</span>
               </div>
               <p className="card-desc">{card.description}</p>
-              <div className="card-footer">
+              <div className="card-footer25">
                 <button className="read-more">Read more ➤</button>
                 <div className="author">
                   <img 

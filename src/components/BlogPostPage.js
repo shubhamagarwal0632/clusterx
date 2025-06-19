@@ -73,12 +73,12 @@ const BlogPostPage = () => {
   const shareText = `Check out this blog post: ${blogPost.title}`;
 
   return (
-    <div className="blog-post-page">
-      <Header />
-      <header className="blog-header">
-        <div className="container">
+    <>
+    
+    <Header/>
+    <div className="container">
           <button onClick={() => navigate(-1)} className="back-button">
-            <FaArrowLeft className="back-icon" /> Back to Blog
+            <FaArrowLeft className="back-icon" />
           </button>
           
           <div className="author-section">
@@ -112,7 +112,10 @@ const BlogPostPage = () => {
             </div>
           </div>
         </div>
-      </header>
+    <div className="blog-post-page">
+      {/* <header className="blog-header">
+       
+      </header> */}
 
       <main className="container">
         <div className="post-content">
@@ -263,6 +266,8 @@ const BlogPostPage = () => {
       </main>
       <Footer />
     </div>
+    </>
+    
   );
 };
 

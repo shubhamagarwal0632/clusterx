@@ -124,8 +124,14 @@ const TeamPage = () => {
   const controls = useAnimation();
   const [ref, inView] = useInView({
     triggerOnce: true,
-    threshold: 0.1
+    threshold: 0.1,
   });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start('visible');
+    }
+  }, [controls, inView]);
 
   useEffect(() => {
     // Smooth scroll to top when component mounts
@@ -170,12 +176,6 @@ const TeamPage = () => {
       });
     };
   }, []);
-  
-  useEffect(() => {
-    if (inView) {
-      controls.start('visible');
-    }
-  }, [controls, inView]);
 
   return (
     <div className="ai-agency-page">
@@ -185,93 +185,92 @@ const TeamPage = () => {
       
       <Header />
       <main>
-        <div className="ai-hero-bg"></div>
-        {/* Hero Section */}
-        <section className="ai-hero">
-          <div className="ai-hero-bg"></div>
-          <div className="ai-hero-content">
-            <motion.div 
-              className="hero-text-container"
-              initial={{ opacity: 0, y: 40 }}
+        <motion.section 
+          className="ai-hero"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="ai-hero-bg">
+            <div className="floating-shape floating-shape-1"></div>
+            <div className="floating-shape floating-shape-2"></div>
+          </div>
+          <motion.div 
+            className="ai-hero-content"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <div className="hero-badge">
-                <span>AI Innovation Leaders</span>
-                <div className="pulse"></div>
-              </div>
-              <h1>
-                Meet Our <span className="gradient-text">AI Experts</span>
-              </h1>
-              <p>
-                A team of passionate AI researchers, engineers, and innovators working together to push the boundaries of artificial intelligence.
-              </p>
-              <motion.div 
-                className="hero-cta"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <a href="#team" className="btn-primary">
-                  Meet the Team
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </a>
-                <a href="#contact" className="btn-secondary">
-                  Get in Touch
-                </a>
-              </motion.div>
+              Meet Our <span className="gradient-text">AI Experts</span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 0.9, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
+              Our team of world-class AI researchers, engineers, and strategists are pushing the boundaries of artificial intelligence to create innovative solutions for businesses worldwide.
+            </motion.p>
+            <motion.div 
+              className="hero-cta"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <a href="#team" className="btn-primary">
+                Meet the Team
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
+              <a href="#contact" className="btn-secondary">
+                Get in Touch
+              </a>
             </motion.div>
-            
-            <div className="hero-visual">
-              <div className="floating-shapes">
-                {[...Array(8)].map((_, i) => (
-                  <motion.div 
-                    key={i}
-                    className={`shape shape-${i + 1}`}
-                    animate={{
-                      y: [0, 15, 0],
-                      rotate: [0, 360],
-                    }}
-                    transition={{
-                      duration: 10 + Math.random() * 10,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-          
-          <div className="scroll-indicator">
-            <div className="mouse">
-              <div className="wheel"></div>
-            </div>
-            <div className="arrows">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </div>
-        </section>
+          </motion.div>
+        </motion.section>
         {/* Stats Section */}
-        <section className="ai-stats">
-          <div className="stats-grid">
+        <section className="stats-section">
+          <div className="section-header">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6 }}
+            >
+              Our Impact in Numbers
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 0.9, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              Delivering exceptional results through cutting-edge AI solutions
+            </motion.p>
+          </div>
+          <motion.div 
+            className="stats-grid"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.5 }}
+            variants={containerVariants}
+          >
             {stats.map((stat) => (
               <motion.div 
                 key={stat.id} 
                 className="stat-card"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: stat.id * 0.1 }}
+                variants={itemVariants}
+                whileHover={{ scale: 1.03 }}
               >
-                <div className="stat-value">{stat.value}</div>
-                <div className="stat-label">{stat.label}</div>
+                <h3>{stat.value}</h3>
+                <p>{stat.label}</p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </section>
 
         {/* Expertise Section */}
@@ -280,16 +279,16 @@ const TeamPage = () => {
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6 }}
             >
               Our Expertise
             </motion.h2>
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 0.9, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
               Cutting-edge AI solutions tailored to your needs
             </motion.p>
@@ -301,8 +300,8 @@ const TeamPage = () => {
                 className="expertise-card"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: item.id * 0.1 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.6, delay: item.id * 0.1 }}
                 whileHover={{ y: -5, boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
               >
                 <div className="expertise-icon">{item.icon}</div>
@@ -314,172 +313,177 @@ const TeamPage = () => {
         </section>
 
         {/* Team Section */}
-        <section className="ai-team" id="team">
+        <section className="team-section">
           <div className="section-header">
-            <motion.div
-              className="section-header-content"
-              initial={{ opacity: 0, y: 40 }}
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6 }}
             >
-              <div className="section-badge">
-                <span>Our Experts</span>
-              </div>
-              <h2>Meet Our <span className="gradient-text">AI Specialists</span></h2>
-              <p>A diverse team of AI experts, researchers, and innovators pushing the boundaries of artificial intelligence</p>
-            </motion.div>
-          </div>
-
-    
-          <div className="team-container">
-            <div className="team-background">
-              <div className="blob blob-1"></div>
-              <div className="blob blob-2"></div>
-              <div className="blob blob-3"></div>
-            </div>
-            
-            <motion.div 
-              className="team-grid"
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
+              Our AI Experts
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 0.9, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
-              {teamMembers.map((member, index) => (
-                <motion.div 
-                  key={member.id} 
-                  className="team-card glass"
-                  variants={itemVariants}
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  custom={index}
-                >
-                  <div className="team-card-inner">
-                    <div className="team-card-front">
-                      <div className="team-image-container">
-                        <img 
-                          src={member.image} 
-                          alt={member.name} 
-                          className="team-image"
-                          loading="lazy"
-                        />
-                        <div className="member-overlay">
-                          <div className="member-overlay-content">
-                            <h3>{member.name}</h3>
-                            <span className="role">{member.role}</span>
-                            <div className="social-links">
-                              <a href={member.social.linkedin} className="social-link" aria-label={`${member.name} LinkedIn`}>
-                                <FaLinkedin />
-                              </a>
-                              <a href={member.social.twitter} className="social-link" aria-label={`${member.name} Twitter`}>
-                                <FaTwitter />
-                              </a>
-                              <a href={member.social.instagram} className="social-link" aria-label={`${member.name} Instagram`}>
-                                <FaInstagram />
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="team-card-back">
-                      <div className="team-info">
-                        <h3>{member.name}</h3>
-                        <span className="role">{member.role}</span>
-                        <p className="member-bio">
-                          Expert in {member.expertise.join(', ')} with a passion for pushing the boundaries of AI technology.
-                        </p>
-                        <div className="expertise-tags">
-                          {member.expertise.map((skill, index) => (
-                            <motion.span 
-                              key={index} 
-                              className="expertise-tag"
-                              whileHover={{ scale: 1.05, backgroundColor: 'rgba(108, 99, 255, 0.2)' }}
-                              transition={{ duration: 0.2 }}
-                            >
-                              {skill}
-                            </motion.span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="team-card-glow"></div>
-                </motion.div>
-              ))}
-            </motion.div>
+              Meet the brilliant minds behind our AI solutions
+            </motion.p>
           </div>
           
-          <motion.section 
-            className="cta-section"
+          <motion.div 
+            className="team-grid"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={containerVariants}
+          >
+            {teamMembers.map((member) => (
+              <motion.div 
+                key={member.id} 
+                className="team-card"
+                variants={itemVariants}
+                whileHover={{ 
+                  y: -10,
+                  transition: { 
+                    type: 'spring',
+                    stiffness: 400,
+                    damping: 10
+                  } 
+                }}
+              >
+                <div className="team-card-image">
+                  <motion.img 
+                    src={member.image} 
+                    alt={member.name}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.4 }}
+                  />
+                </div>
+                <div className="team-card-content">
+                  <h3>{member.name}</h3>
+                  <p className="team-card-role">{member.role}</p>
+                  <div className="team-card-expertise">
+                    {member.expertise.map((skill, index) => (
+                      <motion.span 
+                        key={index}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ type: 'spring', stiffness: 500 }}
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
+                  <div className="team-card-social">
+                    <motion.a 
+                      href={member.social.linkedin} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      whileHover={{ y: -5, scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <FaLinkedin />
+                    </motion.a>
+                    <motion.a 
+                      href={member.social.twitter} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      whileHover={{ y: -5, scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <FaTwitter />
+                    </motion.a>
+                    <motion.a 
+                      href={member.social.instagram} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      whileHover={{ y: -5, scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <FaInstagram />
+                    </motion.a>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="cta-section">
+          <motion.div 
+            className="cta-container"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="cta-container">
-              <div className="cta-content">
-                <div className="cta-badge">
-                  <span>🚀 New Opportunities</span>
+            <div className="cta-content">
+              <div className="cta-badge">
+                <span>🚀 New Opportunities</span>
+              </div>
+              <h3 className="cta-title">
+                Ready to build something <span className="gradient-text">amazing</span> with AI?
+              </h3>
+              <p className="cta-description">
+                Join our innovative team or let's collaborate on your next AI project. We're pushing the boundaries of what's possible.
+              </p>
+              <div className="cta-buttons">
+                <motion.a 
+                  href="#contact" 
+                  className="btn-primary"
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: '0 10px 25px -5px rgba(79, 70, 229, 0.4)'
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Get Started
+                  <span className="btn-icon">→</span>
+                </motion.a>
+                <motion.a 
+                  href="#team" 
+                  className="btn-secondary"
+                  whileHover={{ 
+                    scale: 1.02,
+                    borderColor: '#4f46e5'
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Meet the Team
+                </motion.a>
+              </div>
+              <div className="cta-stats">
+                <div className="stat-item">
+                  <span className="stat-number">50+</span>
+                  <span className="stat-label">Projects</span>
                 </div>
-                <h3 className="cta-title">Ready to build something <span className="gradient-text" data-text="amazing">amazing</span> with AI?</h3>
-                <p className="cta-description">Join our innovative team or let's collaborate on your next AI project. We're pushing the boundaries of what's possible.</p>
-                <div className="cta-buttons">
-                  <motion.a 
-                    href="#contact" 
-                    className="btn-primary"
-                    whileHover={{ 
-                      scale: 1.05,
-                      boxShadow: '0 10px 25px -5px rgba(79, 70, 229, 0.4)'
-                    }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Get Started
-                    <span className="btn-icon">→</span>
-                  </motion.a>
-                  <motion.a 
-                    href="#team" 
-                    className="btn-secondary"
-                    whileHover={{ 
-                      scale: 1.02,
-                      borderColor: '#4f46e5'
-                    }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Meet the Team
-                  </motion.a>
+                <div className="stat-item">
+                  <span className="stat-number">20+</span>
+                  <span className="stat-label">Team Members</span>
                 </div>
-                <div className="cta-stats">
-                  <div className="stat-item">
-                    <span className="stat-number">50+</span>
-                    <span className="stat-label">Projects</span>
-                  </div>
-                  <div className="stat-item">
-                    <span className="stat-number">20+</span>
-                    <span className="stat-label">Team Members</span>
-                  </div>
-                  <div className="stat-item">
-                    <span className="stat-number">100%</span>
-                    <span className="stat-label">Passion</span>
-                  </div>
+                <div className="stat-item">
+                  <span className="stat-number">100%</span>
+                  <span className="stat-label">Passion</span>
                 </div>
               </div>
-              <div className="cta-visual">
-                <div className="floating-shape shape-1"></div>
-                <div className="floating-shape shape-2"></div>
-                <div className="cta-illustration">
-                  <div className="illustration-dots"></div>
-                  <div className="illustration-main">
-                    <div className="illustration-inner">
-                      <span>AI</span>
-                      <div className="illustration-glow"></div>
-                    </div>
+            </div>
+            <div className="cta-visual">
+              <div className="floating-shape shape-1"></div>
+              <div className="floating-shape shape-2"></div>
+              <div className="cta-illustration">
+                <div className="illustration-dots"></div>
+                <div className="illustration-main">
+                  <div className="illustration-inner">
+                    <span>AI</span>
+                    <div className="illustration-glow"></div>
                   </div>
                 </div>
               </div>
             </div>
-          </motion.section>
+          </motion.div>
         </section>
       </main>
       <Footer />

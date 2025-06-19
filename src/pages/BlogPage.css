@@ -186,13 +186,15 @@ body {
 }
 
 .read-more {
-    background: #ff5a1f;
-    color: white;
-    border: none;
-    padding: 10px 12px;
-    border-radius: 999px;
-    font-size: 14px;
-    cursor: pointer;
+  background: #ff5a1f;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  width: 7vw;
+  border-radius: 999px;
+  font-size: 0.7em;
+  cursor: pointer;
+  margin: 0 2px;
 }
 .read-more:hover {
   color: #E65C00;
