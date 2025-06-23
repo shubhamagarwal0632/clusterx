@@ -97,8 +97,8 @@ const Header = () => {
                   </svg>
                 </div>
                 <div className="dropdown-item-content">
-                  <div className="dropdown-item-title">AddTech</div>
-                  <div className="dropdown-item-desc">Technology solutions for advertisers</div>
+                  <div className="dropdown-item-title">Education</div>
+                  <div className="dropdown-item-desc">Innovative learning and educational technology solutions</div>
                 </div>
               </a>
               <a href="#telecalling" className="dropdown-item" onClick={() => setMenuOpen(false)}>

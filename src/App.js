@@ -26,6 +26,7 @@ import DiscoveryCallPage from './pages/DiscoveryCallPage';
 import TeamPage from './pages/TeamPage';
 import IndustryPage from './pages/IndustryPage';
 import StorePage from './pages/StorePage';
+import HealthcarePage from './pages/HealthcarePage';
 import './components/Loader.css';
 
 const MainContent = () => (
@@ -83,6 +84,7 @@ function App() {
           <Route path="/team" element={<TeamPage />} />
           <Route path="/industry" element={<IndustryPage />} />
           <Route path="/store" element={<StorePage />} />
+          <Route path="/healthcare" element={<HealthcarePage />} />
           <Route path="/" element={<MainContent />} />
           <Route path="*" element={<MainContent />} />
         </Routes>
