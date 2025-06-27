@@ -1,744 +1,188 @@
-import React, { useState, useRef } from 'react';
-import { 
-  FiArrowRight, 
-  FiPlay, 
-  FiCheck, 
-  FiClock, 
-  FiUsers, 
-  FiStar, 
-  FiShield, 
-  FiActivity, 
-  FiTrendingUp, 
-  FiChevronRight,
-  FiCalendar,
-  FiPhoneCall 
-} from 'react-icons/fi';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import './HealthcarePage.css';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
+import styles from './HealthcarePage.module.css';
+import { FaCheckCircle, FaArrowRight } from 'react-icons/fa';
+
+
 
 const HealthcarePage = () => {
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const videoRef = useRef(null);
-  
-  const toggleVideo = () => {
-    setIsVideoOpen(!isVideoOpen);
-  };
+    const [openAccordion, setOpenAccordion] = useState(null);
 
-  // Features data
-  const features = [
-    {
-      icon: <FiActivity className="feature-icon" />,
-      title: 'AI-Powered Diagnosis',
-      description: 'Advanced AI algorithms for accurate and fast diagnosis',
-      color: '#4F46E5',
-      delay: 0.1
-    },
-    {
-      icon: <FiUsers className="feature-icon" />,
-      title: 'Patient Management',
-      description: 'Comprehensive patient records and history tracking',
-      color: '#10B981',
-      delay: 0.2
-    },
-    {
-      icon: <FiShield className="feature-icon" />,
-      title: 'Secure Data',
-      description: 'HIPAA compliant data security and privacy',
-      color: '#F59E0B',
-      delay: 0.3
-    },
-    {
-      icon: <FiClock className="feature-icon" />,
-      title: '24/7 Support',
-      description: 'Round-the-clock customer support',
-      color: '#3B82F6',
-      delay: 0.4
-    }
-  ];
+    const toggleAccordion = (id) => {
+        setOpenAccordion(openAccordion === id ? null : id);
+    };
 
-  // Stats data with animation values
-  const stats = [
-    { 
-      value: '95%', 
-      label: 'Diagnostic Accuracy', 
-      icon: <FiCheck />,
-      color: '#4F46E5',
-      duration: 2.5
-    },
-    { 
-      value: '24/7', 
-      label: 'Support', 
-      icon: <FiClock />,
-      color: '#10B981',
-      duration: 1.5
-    },
-    { 
-      value: '500+', 
-      label: 'Healthcare Partners', 
-      icon: <FiUsers />,
-      color: '#F59E0B',
-      duration: 2.0
-    },
-    { 
-      value: '4.9', 
-      label: 'Rating', 
-      icon: <FiStar />,
-      color: '#3B82F6',
-      duration: 1.8
-    }
-  ];
-  
-  const testimonials = [
-    {
-      id: 1,
-      name: 'Dr. Sarah Johnson',
-      role: 'Chief Medical Officer',
-      content: 'Clusterx has transformed how we deliver care. The AI-driven insights have improved our diagnosis accuracy by 40% and reduced administrative workload significantly.',
-      rating: 5,
-      image: 'https://randomuser.me/api/portraits/women/44.jpg'
-    },
-    {
-      id: 2,
-      name: 'Michael Chen',
-      role: 'Hospital Administrator',
-      content: 'The seamless integration with our existing systems was a game-changer. We saw ROI within the first 3 months of implementation.',
-      rating: 5,
-      image: 'https://randomuser.me/api/portraits/men/32.jpg'
-    },
-    {
-      id: 3,
-      name: 'Dr. Emily Rodriguez',
-      role: 'Head of Pediatrics',
-      content: 'The predictive analytics have been incredibly accurate. We\'re able to identify at-risk patients earlier and provide proactive care.',
-      rating: 4,
-      image: 'https://randomuser.me/api/portraits/women/68.jpg'
-    }
-  ];
-
-  // Animation variants
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        duration: 0.6,
-        ease: [0.16, 1, 0.3, 1] 
-      } 
-    }
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        when: "beforeChildren"
-      }
-    }
-  };
-  
-  const fadeInItem = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5
-      }
-    }
-  };
-
-  return (
-    <div className="healthcare-page">
-      <Header />
-      
-      {/* Hero Section */}
-      <section className="hero">
-        <div className="container">
-          <div className="hero-content">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="hero-text"
-            >
-              <h1>Transforming Healthcare with AI</h1>
-              <p className="subtitle">
-                Revolutionizing patient care through intelligent automation and data-driven insights
-                for healthcare providers worldwide.
-              </p>
-              
-              <div className="hero-actions">
-                <motion.button 
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="primary-btn"
-                >
-                  Get Started
-                  <FiArrowRight className="btn-icon" />
-                </motion.button>
-                <button className="secondary-btn">
-                  <FiPlay className="btn-icon" /> Watch Demo
+    const AccordionItem = ({ id, title, content, isOpen, toggle }) => {
+        return (
+            <div className={styles['solution-item-hp']}>
+                <button className={styles['solution-item-header-hp']} onClick={() => toggle(id)}>
+                    {title}
+                    <span>{isOpen ? '-' : '+'}</span>
                 </button>
-              </div>
-              
-              <div className="features-container">
-                <div className="section-header">
-                  <h2>Our Services</h2>
-                  <p>Comprehensive healthcare solutions powered by AI</p>
-                </div>
-                <div className="features-grid">
-                  {features.map((feature, index) => (
-                    <motion.div 
-                      key={index}
-                      className="feature-card"
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      transition={{ duration: 0.5, delay: feature.delay }}
-                      whileHover={{ y: -10 }}
-                    >
-                      <div 
-                        className="feature-icon"
-                        style={{ background: `${feature.color}10` }}
-                      >
-                        {React.cloneElement(feature.icon, { 
-                          style: { color: feature.color, fontSize: '1.5rem' } 
-                        })}
-                      </div>
-                      <h3>{feature.title}</h3>
-                      <p>{feature.description}</p>
-                      <div className="feature-line" style={{ background: feature.color }}></div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-            
-            <motion.div 
-              className="hero-visual"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                alt="Healthcare professionals" 
-                loading="eager"
-                className="hero-image"
-              />
-            </motion.div>
-          </div>
-          
-          {/* Stats Section */}
-          <div className="stats-container">
-            <div className="stats-grid">
-              {stats.map((stat, index) => (
-                <motion.div 
-                  key={index}
-                  className="stat-card"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <div 
-                    className="stat-icon"
-                    style={{ background: `${stat.color}15` }}
-                  >
-                    {React.cloneElement(stat.icon, { 
-                      style: { color: stat.color, fontSize: '1.5rem' } 
-                    })}
-                  </div>
-                  <div className="stat-content">
-                    <h3>{stat.value}</h3>
-                    <p>{stat.label}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="stats-section">
-        <div className="container">
-          <div className="stats-grid">
-            {stats.map((stat, index) => (
-              <motion.div 
-                key={index}
-                className="stat-card"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <div className="stat-icon-wrapper">
-                  {stat.icon}
-                </div>
-                <h3>{stat.value}</h3>
-                <p>{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Video Showcase */}
-      <section className="video-showcase">
-        <div className="container">
-          <motion.div 
-            className="video-container"
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            <div className="video-wrapper">
-              <img 
-                src="https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                alt="Healthcare Technology"
-                className="video-thumbnail"
-              />
-              <button className="play-button" onClick={toggleVideo}>
-                <FiPlay className="play-icon" />
-              </button>
-              <div className="video-overlay"></div>
-            </div>
-            <div className="video-content">
-              <h2>See Clusterx in Action</h2>
-              <p>Watch our 2-minute demo to see how Clusterx is transforming healthcare delivery with AI-powered solutions.</p>
-              <button className="secondary-button" onClick={toggleVideo}>
-                <FiPlay className="play-icon" /> Watch Demo
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Features Grid */}
-      <section className="features-grid-section">
-        <div className="container">
-          <motion.div 
-            className="section-header"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="section-tag">Why Choose Us</span>
-            <h2 className="section-title">Comprehensive Healthcare Solutions</h2>
-            <p className="section-description">
-              Our platform is designed to address the unique challenges of modern healthcare delivery.
-            </p>
-          </motion.div>
-          
-          <div className="features-grid">
-            {features.map((feature, index) => (
-              <motion.div 
-                key={index}
-                className="feature-card"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="feature-icon-wrapper">
-                  {feature.icon}
-                </div>
-                <h3>{feature.title}</h3>
-                <p>{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* The Challenge Section */}
-      <section className="section challenge-section">
-        <div className="container">
-          <motion.div 
-            className="section-header"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeInUp}
-          >
-            <span className="section-tag">The Challenge</span>
-            <h2 className="section-title">
-              Overcoming Healthcare's Biggest Hurdles
-            </h2>
-            <p className="section-description">
-              Healthcare providers face numerous challenges in delivering quality patient care while managing administrative burdens and operational inefficiencies.
-            </p>
-          </motion.div>
-          
-          <div className="section-content">
-            <motion.div 
-              className="challenge-image"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                alt="Medical team discussing" 
-                loading="lazy"
-              />
-              <div className="experience-badge">
-                <span>10+ Years</span>
-                <p>In Healthcare Innovation</p>
-              </div>
-            </motion.div>
-            
-            <motion.div 
-              className="challenge-points"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <motion.div 
-                className="point-card"
-                variants={fadeInUp}
-                whileHover={{ y: -5 }}
-              >
-                <div className="card-icon">
-                  <FiCheck />
-                </div>
-                <div className="card-content">
-                  <h3>Faster Diagnosis</h3>
-                  <p>Reduce diagnosis time with AI-powered clinical decision support that analyzes patient data in real-time.</p>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="point-card"
-                variants={fadeInUp}
-                whileHover={{ y: -5 }}
-              >
-                <div className="card-icon">
-                  <FiCheck />
-                </div>
-                <div className="card-content">
-                  <h3>Improved Patient Outcomes</h3>
-                  <p>Enhance care quality with predictive analytics and personalized treatment recommendations.</p>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="point-card"
-                variants={fadeInUp}
-                whileHover={{ y: -5 }}
-              >
-                <div className="card-icon">
-                  <FiCheck />
-                </div>
-                <div className="card-content">
-                  <h3>Reduced Administrative Burden</h3>
-                  <p>Automate documentation and administrative tasks to let healthcare professionals focus on patient care.</p>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* The Solution Section */}
-      <section className="section solution-section">
-        <div className="container">
-          <motion.div 
-            className="section-header"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="section-tag">Our Solution</span>
-            <h2 className="section-title">
-              AI-Powered Healthcare Transformation
-            </h2>
-            <p className="section-description">
-              Clusterx delivers cutting-edge AI solutions designed specifically to address the unique challenges of the healthcare industry.
-            </p>
-          </motion.div>
-          
-          <div className="section-content">
-            <motion.div 
-              className="solution-points"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
-            >
-              <motion.div 
-                className="solution-card"
-                variants={fadeInUp}
-                whileHover={{ y: -5 }}
-              >
-                <div className="solution-card-inner">
-                  <h3>AI-Driven Clinical Insights</h3>
-                  <p>Leverage advanced machine learning to analyze complex medical data and provide actionable, real-time clinical insights at the point of care.</p>
-                  <a href="#" className="learn-more">
-                    Learn more <FiChevronRight className="arrow-icon" />
-                  </a>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="solution-card"
-                variants={fadeInUp}
-                whileHover={{ y: -5 }}
-              >
-                <div className="solution-card-inner">
-                  <h3>Seamless Integration</h3>
-                  <p>End-to-end integration with existing healthcare systems for seamless workflow automation and minimal disruption to clinical operations.</p>
-                  <a href="#" className="learn-more">
-                    Learn more <FiChevronRight className="arrow-icon" />
-                  </a>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="solution-card highlight-card"
-                variants={fadeInUp}
-                whileHover={{ y: -5 }}
-              >
-                <div className="solution-card-inner">
-                  <h3>Ready to Transform Your Practice?</h3>
-                  <p>Discover how Clusterx can revolutionize your healthcare delivery.</p>
-                  <motion.button 
-                    className="cta-button"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Implement AI Solution
-                  </motion.button>
-                </div>
-              </motion.div>
-            </motion.div>
-            
-            <motion.div 
-              className="solution-image"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1581093450232-9b52c48e9f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                alt="Medical technology" 
-                loading="lazy"
-              />
-              <div className="solution-badge">
-                <FiActivity className="badge-icon" />
-                <span>AI-Powered Analytics</span>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Testimonials Section */}
-      <section className="testimonials-section">
-        <div className="container">
-          <motion.div 
-            className="section-header"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="section-tag">Testimonials</span>
-            <h2 className="section-title">What Our Clients Say</h2>
-            <p className="section-description">
-              Hear from healthcare professionals who have transformed their practice with Clusterx.
-            </p>
-          </motion.div>
-          
-          <div className="testimonials-container">
-            <div className="testimonial-content">
-              <div className="testimonial-text">
-                <div className="quote-icon">"</div>
-                <p>{testimonials[activeTestimonial].content}</p>
-                <div className="testimonial-author">
-                  <img 
-                    src={testimonials[activeTestimonial].image} 
-                    alt={testimonials[activeTestimonial].name}
-                    className="author-avatar"
-                  />
-                  <div className="author-info">
-                    <h4>{testimonials[activeTestimonial].name}</h4>
-                    <p>{testimonials[activeTestimonial].role}</p>
-                    <div className="rating">
-                      {[...Array(5)].map((_, i) => (
-                        <FiStar 
-                          key={i} 
-                          className={i < testimonials[activeTestimonial].rating ? 'star filled' : 'star'} 
-                        />
-                      ))}
+                {isOpen && (
+                    <div className={styles['solution-item-content-hp']}>
+                        <p>{content}</p>
                     </div>
-                  </div>
+                )}
+            </div>
+        );
+    };
+
+    const solutionItems = [
+        { id: 1, title: 'Integrated AI Approach', content: 'Our platform integrates multiple AI models to address various aspects of clinical workflows, from patient intake to discharge planning.' },
+        { id: 2, title: 'Predictive Analytics', content: 'Leveraging historical data, our system predicts patient admissions, resource needs, and potential health risks, allowing for proactive interventions.' },
+        { id: 3, title: 'Real-time Decision Support', content: 'Clinicians receive AI-powered insights and recommendations directly within their workflow, enabling faster, more informed decisions.' },
+    ];
+
+    return (
+        <div className={styles['healthcare-page-new']}>
+            {/* Hero Section */}
+            <section className={styles['hero-section-hp']}>
+                <div className={`${styles['container-hp']} ${styles['grid-hp']}`}>
+                    <div className={styles['hero-text-hp']}>
+                        <h1><span style={{color: '#FF6B6B'}}>Clusterx:</span> Transforming Clinical Workflows</h1>
+                        <p className={styles['subtitle-hp']}>How our AI-powered solutions helped a major hospital network streamline operations and improve patient outcomes.</p>
+                        <div className={styles['hero-stats-hp']}>
+                            <div className={styles['stat-item-hp']}><strong>Client</strong><span>Healthcare</span></div>
+                            <div className={styles['stat-item-hp']}><strong>Year</strong><span>2023</span></div>
+                            <div className={styles['stat-item-hp']}><strong>Service</strong><span>AI Development</span></div>
+                        </div>
+                    </div>
+                    <div className={styles['hero-image-container-hp']}>
+                        <img src="https://images.unsplash.com/photo-1537368910025-700350796527?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Doctor with tablet" className={styles['hero-image-hp']} />
+                    </div>
                 </div>
-              </div>
-              <div className="testimonial-nav">
-                {testimonials.map((_, index) => (
-                  <button
-                    key={index}
-                    className={`nav-dot ${index === activeTestimonial ? 'active' : ''}`}
-                    onClick={() => setActiveTestimonial(index)}
-                    aria-label={`View testimonial ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className="testimonial-image">
-              <img 
-                src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                alt="Happy healthcare professional"
-                loading="lazy"
-              />
-            </div>
-          </div>
+            </section>
+
+            {/* Challenge Section */}
+            <section className={styles['challenge-section-hp']}>
+                <div className={`${styles['container-hp']} ${styles['grid-hp']}`}>
+                    <div className={styles['challenge-image-container-hp']}>
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba9996a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Medical team collaborating" className={styles['challenge-image-hp']} />
+                    </div>
+                    <div className={styles['challenge-content-hp']}>
+                        <h2>The Challenge</h2>
+                        <p>A leading hospital network was struggling with inefficient clinical workflows, leading to delays in patient care, physician burnout, and increased operational costs.</p>
+                        <div className={styles['challenge-list-hp']}>
+                            <div className={styles['challenge-item-hp']}>
+                                <h3>Data Overload</h3>
+                                <p>Clinicians were overwhelmed by the sheer volume of data from various sources, making it difficult to extract actionable insights.</p>
+                            </div>
+                            <div className={styles['challenge-item-hp']}>
+                                <h3>Physician Burnout</h3>
+                                <p>Repetitive administrative tasks were consuming a significant portion of clinicians' time, contributing to stress and burnout.</p>
+                            </div>
+                            <div className={styles['challenge-item-hp']}>
+                                <h3>Patient Flow Inefficiency</h3>
+                                <p>Bottlenecks in patient flow, from admission to discharge, resulted in long wait times and suboptimal resource utilization.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Solution Section */}
+            <section className={styles['solution-section-hp']}>
+                <div className={`${styles['container-hp']} ${styles['grid-hp']}`}>
+                    <div className={styles['solution-content-hp']}>
+                        <h2>The Solution</h2>
+                        <p>Clusterx developed a suite of AI-powered tools to automate administrative tasks, predict patient needs, and provide real-time decision support to clinical staff.</p>
+                        <div className={styles['solution-accordion-hp']}>
+                            {solutionItems.map(item => (
+                                <AccordionItem 
+                                    key={item.id} 
+                                    {...item} 
+                                    isOpen={openAccordion === item.id} 
+                                    toggle={toggleAccordion} 
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    <div className={styles['solution-image-container-hp']}>
+                        <img src="https://images.unsplash.com/photo-1614926857224-5179b784ca46?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="AI diagnostics" className={styles['solution-image-hp']} />
+                        <div className={styles['timeline-box-hp']}>
+                            <h4>Implementation Timeline</h4>
+                            <p>The project was delivered in 6 months, from initial consultation to full-scale deployment.</p>
+                            <a href="#">View Project Timeline <FaArrowRight /></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Key Features Section */}
+            <section className={styles['features-section-hp']}>
+                <div className={`${styles['container-hp']} ${styles['text-center-hp']}`}>
+                    <h2>Key Features</h2>
+                    <p className={styles['section-subtitle-hp']}>Our AI solutions are designed to integrate seamlessly into existing hospital systems, providing a powerful yet intuitive user experience for clinical staff.</p>
+                    
+                    <div className={styles['features-grid-hp']}>
+                        {[
+                            { id: '01', title: 'Smart Appointments & Triage', description: 'AI-powered scheduling and triage system that optimizes appointments.' },
+                            { id: '02', title: 'Real-time Bed Management', description: 'Predictive analytics for bed availability, reducing wait times.' },
+                            { id: '03', title: 'AI-powered Diagnosis', description: 'Advanced imaging analysis and diagnostic support for clinicians.' },
+                            { id: '04', title: 'EHR Data Automation', description: 'Automated data entry and retrieval from Electronic Health Records.' },
+                            { id: '05', title: 'Clinical Trial Matching', description: 'AI algorithms to match eligible patients with clinical trials.' },
+                            { id: '06', title: 'Personalized Patient Care', description: 'Data-driven insights to create personalized treatment plans.' },
+                        ].map(feature => (
+                            <div className={styles['feature-card-hp']} key={feature.id}>
+                                <div className={styles['feature-card-id-hp']}>{feature.id}</div>
+                                <h3>{feature.title}</h3>
+                                <p>{feature.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Impact & Results Section */}
+            <section className={styles['impact-section-hp']}>
+                <div className={`${styles['container-hp']} ${styles['text-center-hp']}`}>
+                    <h2>Impact & Results</h2>
+                    <p className={styles['section-subtitle-hp']}>The implementation of Clusterx's AI solutions resulted in significant improvements across key performance indicators.</p>
+                    <div className={styles['impact-grid-hp']}>
+                        <div className={styles['impact-card-hp']}>
+                            <h2>76%</h2>
+                            <h4>Reduction</h4>
+                            <p>in administrative tasks for clinicians</p>
+                        </div>
+                        <div className={styles['impact-card-hp']}>
+                            <h2>32%</h2>
+                            <h4>Improvement</h4>
+                            <p>in patient throughput</p>
+                        </div>
+                        <div className={styles['impact-card-hp']}>
+                            <h2>$2.4M</h2>
+                            <h4>Annual Savings</h4>
+                            <p>in operational costs</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Conclusion Section */}
+            <section className={styles['conclusion-section-hp']}>
+                <div className={`${styles['container-hp']} ${styles['grid-hp']}`}>
+                    <div className={styles['conclusion-content-hp']}>
+                        <h2>Conclusion</h2>
+                        <p>By leveraging the power of AI, Clusterx enabled the hospital network to transform its clinical workflows, leading to a more efficient, effective, and sustainable healthcare delivery system.</p>
+                        <ul className={styles['conclusion-list-hp']}>
+                            <li className={styles['conclusion-item-hp']}><FaCheckCircle className={styles['check-icon-hp']} /> AI-driven efficiency gains</li>
+                            <li className={styles['conclusion-item-hp']}><FaCheckCircle className={styles['check-icon-hp']} /> Enhanced patient care quality</li>
+                            <li className={styles['conclusion-item-hp']}><FaCheckCircle className={styles['check-icon-hp']} /> Reduced operational costs</li>
+                            <li className={styles['conclusion-item-hp']}><FaCheckCircle className={styles['check-icon-hp']} /> Improved clinician satisfaction</li>
+                            <li className={styles['conclusion-item-hp']}><FaCheckCircle className={styles['check-icon-hp']} /> Scalable for future growth</li>
+                        </ul>
+                        <div className={styles['conclusion-actions-hp']}>
+                            <button className={styles['primary-btn-hp']}>View Project</button>
+                            <button className={styles['secondary-btn-hp']}>Contact Us</button>
+                        </div>
+                    </div>
+                    <div className={styles['conclusion-image-container-hp']}>
+                        <img src="https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Happy client" className={styles['conclusion-image-hp']} />
+                    </div>
+                </div>
+            </section>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="cta-section">
-        {/* Decorative Shapes */}
-        <div className="cta-shape cta-shape-1"></div>
-        <div className="cta-shape cta-shape-2"></div>
-        
-        <div className="container">
-          <motion.div 
-            className="cta-content"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ 
-              opacity: 1, 
-              y: 0,
-              transition: {
-                duration: 0.6,
-                ease: [0.16, 1, 0.3, 1]
-              }
-            }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ 
-                opacity: 1, 
-                y: 0,
-                transition: { delay: 0.1 }
-              }}
-              viewport={{ once: true }}
-            >
-              Ready to Transform Your Healthcare Practice?
-            </motion.h2>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ 
-                opacity: 1, 
-                y: 0,
-                transition: { delay: 0.2 }
-              }}
-              viewport={{ once: true }}
-            >
-              Join thousands of healthcare providers revolutionizing patient care with Clusterx AI solutions.
-              Experience the future of healthcare technology today.
-            </motion.p>
-            
-            <motion.div 
-              className="cta-buttons"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ 
-                opacity: 1, 
-                y: 0,
-                transition: { delay: 0.3 }
-              }}
-              viewport={{ once: true }}
-            >
-              <motion.button 
-                className="cta-button primary-btn"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Get Started Free
-                <FiArrowRight className="ml-2" />
-              </motion.button>
-              
-              <motion.button 
-                className="cta-button secondary-btn"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Schedule a Demo
-              </motion.button>
-            </motion.div>
-            
-            <motion.div 
-              className="mt-10 text-sm text-white/80"
-              initial={{ opacity: 0 }}
-              whileInView={{ 
-                opacity: 1,
-                transition: { delay: 0.4 }
-              }}
-              viewport={{ once: true }}
-            >
-              No credit card required • Cancel anytime • 24/7 Support
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Video Modal */}
-      <AnimatePresence>
-        {isVideoOpen && (
-          <motion.div 
-            className="video-modal"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={toggleVideo}
-          >
-            <motion.div 
-              className="video-modal-content"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={e => e.stopPropagation()}
-            >
-              <button className="close-button" onClick={toggleVideo}>
-                &times;
-              </button>
-              <div className="video-wrapper">
-                <iframe
-                  ref={videoRef}
-                  width="100%"
-                  height="100%"
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1"
-                  title="Clusterx Demo"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <Footer />
-    </div>
-  );
+    );
 };
 
 export default HealthcarePage;

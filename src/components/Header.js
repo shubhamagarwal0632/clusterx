@@ -150,7 +150,7 @@ const Header = () => {
             </div>
           )}
         </div>
-        <a href="#store" onClick={() => setMenuOpen(false)}>Store</a>
+        <a href="/store" onClick={() => setMenuOpen(false)}>Store</a>
         <div className="dropdown-container" ref={resourcesDropdownRef}>
           <button 
             className="dropdown-toggle" 
